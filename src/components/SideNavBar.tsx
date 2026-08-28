@@ -21,6 +21,7 @@ interface SideNavBarProps {
   activeTab: ActiveTab;
   onTabChange: (tab: ActiveTab) => void;
   onOpenPostOpportunity: () => void;
+  onOpenLogout: () => void;
   currentLanguage: LanguageCode;
   currentRole: UserRole;
 }
@@ -29,6 +30,7 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
   activeTab,
   onTabChange,
   onOpenPostOpportunity,
+  onOpenLogout,
   currentLanguage,
   currentRole
 }) => {
@@ -44,7 +46,8 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
     { id: 'academician_hub', label: t.academicianHub || 'Academician Hub', icon: Landmark, roles: ['academician', 'student', 'recruiter', 'institution_admin'] },
     { id: 'analytics', label: t.analytics || 'Analytics', icon: BarChart3, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
     { id: 'documents', label: t.documents || 'Document Vault', icon: FolderLock, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'collaboration', label: t.collaboration || 'Collaboration Hub', icon: Handshake, roles: ['student', 'recruiter', 'academician', 'institution_admin'] }
+    { id: 'collaboration', label: t.collaboration || 'Collaboration Hub', icon: Handshake, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
+    { id: 'help_center', label: t.helpCenter || 'Help Center', icon: LifeBuoy, roles: ['student', 'recruiter', 'academician', 'institution_admin'] }
   ];
 
   return (
@@ -96,14 +99,20 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
       {/* Bottom Footer Items */}
       <div className="mt-auto flex flex-col gap-1 border-t border-[#3E3E32] pt-4 px-1">
         <button 
-          onClick={() => alert("SkillBridge Nexus Help Center: Support documentation, institutional onboarding guides, and API documentation are active.")}
-          className="flex items-center gap-3 text-[#A9A89C] hover:text-[#F9F9F7] px-3 py-2 text-xs rounded-lg hover:bg-[#3D3D30] transition-colors text-left cursor-pointer"
+          id="sidebar-help-center-btn"
+          onClick={() => onTabChange('help_center')}
+          className={`flex items-center gap-3 px-3 py-2 text-xs rounded-lg transition-colors text-left cursor-pointer ${
+            activeTab === 'help_center'
+              ? 'text-[#F9F9F7] bg-[#404033] font-semibold'
+              : 'text-[#A9A89C] hover:text-[#F9F9F7] hover:bg-[#3D3D30]'
+          }`}
         >
-          <LifeBuoy className="w-4 h-4" />
+          <LifeBuoy className="w-4 h-4 text-[#D4D4B8]" />
           <span>{t.helpCenter || 'Help Center'}</span>
         </button>
         <button 
-          onClick={() => alert("Logged in as Brajesh (brajeshpanigrahi7@gmail.com). Session token cryptographically active.")}
+          id="sidebar-logout-btn"
+          onClick={onOpenLogout}
           className="flex items-center gap-3 text-[#A9A89C] hover:text-[#F9F9F7] px-3 py-2 text-xs rounded-lg hover:bg-[#3D3D30] transition-colors text-left cursor-pointer"
         >
           <LogOut className="w-4 h-4" />

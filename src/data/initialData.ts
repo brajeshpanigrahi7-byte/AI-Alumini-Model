@@ -6,7 +6,12 @@ import {
   DocumentItem, 
   MentorshipSession, 
   Application,
-  NotificationItem 
+  NotificationItem,
+  HelpCategory,
+  HelpArticle,
+  FAQItem,
+  SupportTicket,
+  SessionInfo
 } from '../types';
 
 export const initialUserProfile: UserProfile = {
@@ -976,3 +981,231 @@ export const translations: Record<string, Record<string, string>> = {
     onlineStatus: 'クラウド同期中'
   }
 };
+
+export const initialHelpCategories: HelpCategory[] = [
+  {
+    id: 'cat_passport',
+    name: 'Skill Passport & Verification',
+    description: 'Learn how micro-credentials, cryptographic hashes, and faculty endorsements work.',
+    icon: 'BadgeCheck',
+    articleCount: 4
+  },
+  {
+    id: 'cat_assessments',
+    name: 'Assessments & Benchmarking',
+    description: 'Proctoring rules, rubric scoring, timed coding challenges, and retake policies.',
+    icon: 'HelpCircle',
+    articleCount: 3
+  },
+  {
+    id: 'cat_opportunities',
+    name: 'Opportunities & Hiring',
+    description: 'Direct applications, enterprise MoUs, stipend verification, and interview matching.',
+    icon: 'Briefcase',
+    articleCount: 4
+  },
+  {
+    id: 'cat_academician',
+    name: 'Academician Hub & FDPs',
+    description: 'Curriculum modernization, faculty industry sabbaticals, research grants, and guest lectures.',
+    icon: 'Landmark',
+    articleCount: 3
+  },
+  {
+    id: 'cat_security',
+    name: 'Document Vault & Security',
+    description: 'SHA-256 digital seals, zero-knowledge verification, two-factor auth, and session security.',
+    icon: 'FolderLock',
+    articleCount: 3
+  },
+  {
+    id: 'cat_account',
+    name: 'Account & Multi-Role Switching',
+    description: 'Switching between Student, Recruiter, Faculty, and Admin roles without data loss.',
+    icon: 'Shield',
+    articleCount: 2
+  }
+];
+
+export const initialHelpArticles: HelpArticle[] = [
+  {
+    id: 'art_1',
+    categoryId: 'cat_passport',
+    title: 'How Cryptographic Skill Passport Verification Works',
+    excerpt: 'Each skill milestone is signed by an accredited institution and anchored with a tamper-proof SHA-256 hash.',
+    content: 'When an assessment is passed or a faculty member endorses a milestone, SkillBridge Nexus computes a unique digital signature `0x8f2d...b14e`. This cryptographic hash is verifiable by external employers via the public portfolio link without revealing sensitive private student data.',
+    tags: ['Verification', 'Security', 'Skill Passport', 'Employers'],
+    readTime: '3 min read',
+    helpfulCount: 342,
+    lastUpdated: 'August 2026'
+  },
+  {
+    id: 'art_2',
+    categoryId: 'cat_passport',
+    title: 'Exporting Your Verified Resume & Digital Credential Badge',
+    excerpt: 'Download ATS-optimized PDF resumes equipped with machine-readable verification QR codes.',
+    content: 'Click "View Verified Resume" on your profile or skill passport. You can print or download the PDF. Recruiters scanning the verification token will be redirected to your live verified portal snapshot.',
+    tags: ['Resume', 'PDF Export', 'Recruiters'],
+    readTime: '2 min read',
+    helpfulCount: 218,
+    lastUpdated: 'August 2026'
+  },
+  {
+    id: 'art_3',
+    categoryId: 'cat_assessments',
+    title: 'Assessment Proctoring, Scoring Weights, and Retake Window',
+    excerpt: 'Understand how dynamic time constraints and anti-plagiarism heuristics score your competency.',
+    content: 'Assessments use weighted multi-domain rubrics (Code Execution 40%, Architectural Thinking 30%, Speed 30%). If a score below 70% is achieved, a 14-day mastery study cooldown is initiated with recommended learning modules.',
+    tags: ['Assessments', 'Scoring', 'Rubrics', 'Cooldown'],
+    readTime: '4 min read',
+    helpfulCount: 189,
+    lastUpdated: 'July 2026'
+  },
+  {
+    id: 'art_4',
+    categoryId: 'cat_opportunities',
+    title: 'Direct Industry Fast-Track: How Priority Match Scores Work',
+    excerpt: 'Our AI alignment engine calculates your match percentage based on verified skills and project repositories.',
+    content: 'Job postings showcase a Match Score (e.g. 96%). Candidates with verified skills matching 80%+ of the core requirements skip automated resume parsing and are delivered directly to the engineering hiring manager’s desk.',
+    tags: ['Jobs', 'Internships', 'Match Score', 'AI Matching'],
+    readTime: '3 min read',
+    helpfulCount: 412,
+    lastUpdated: 'August 2026'
+  },
+  {
+    id: 'art_5',
+    categoryId: 'cat_academician',
+    title: 'Faculty Industry Sabbaticals and Sponsored Research Funding',
+    excerpt: 'Step-by-step guidance for professors applying to 6-month corporate research residency programs.',
+    content: 'Accredited academicians can submit proposals to enterprise partners like Siemens, Nexus Labs, and AWS Cloud. Once Dean approval is registered in the Academician Hub, travel grants and laboratory computing clusters are provisioned.',
+    tags: ['Faculty', 'Sabbaticals', 'Research Grants', 'MoUs'],
+    readTime: '5 min read',
+    helpfulCount: 124,
+    lastUpdated: 'June 2026'
+  },
+  {
+    id: 'art_6',
+    categoryId: 'cat_security',
+    title: 'Zero-Knowledge Proofs in the Document Vault',
+    excerpt: 'Why your transcript and confidential degree certs remain unalterable and securely encrypted.',
+    content: 'The Document Vault utilizes client-side hashing where documents are cryptographically fingerprinted before transmission. Third-party auditors only verify the fingerprint authenticity against the university ledger.',
+    tags: ['Security', 'Encryption', 'Documents', 'Vault'],
+    readTime: '3 min read',
+    helpfulCount: 275,
+    lastUpdated: 'August 2026'
+  }
+];
+
+export const initialFAQs: FAQItem[] = [
+  {
+    id: 'faq_1',
+    category: 'Skill Passport',
+    question: 'How do I request an endorsement from my university faculty advisor?',
+    answer: 'Navigate to your Skill Passport view, select the desired skill item (e.g., Python & Pandas), and click "Request Faculty Endorsement". Enter your professor’s university email or select from accredited faculty in your department.',
+    views: 1420
+  },
+  {
+    id: 'faq_2',
+    category: 'Opportunities',
+    question: 'Can recruiters contact me directly through SkillBridge Nexus?',
+    answer: 'Yes! When you publish your verified public portfolio or apply to an opportunity, hiring managers can schedule live technical interviews or dispatch offers directly into your notification feed and linked email.',
+    views: 2150
+  },
+  {
+    id: 'faq_3',
+    category: 'Assessments',
+    question: 'What happens if my internet connection drops during an assessment?',
+    answer: 'SkillBridge Nexus features automatic offline caching and local state recovery. Your answers are saved locally every 3 seconds. Once reconnected, your session resumes seamlessly without score penalty.',
+    views: 980
+  },
+  {
+    id: 'faq_4',
+    category: 'Account & Security',
+    question: 'How do I switch my role between Student, Recruiter, and Faculty?',
+    answer: 'Use the quick Role Switcher dropdown in the top navigation bar. Switching roles adjusts permissions and interface features instantly while preserving your central user data.',
+    views: 3100
+  },
+  {
+    id: 'faq_5',
+    category: 'Document Vault',
+    question: 'What document formats are supported in the Verified Vault?',
+    answer: 'We support PDF, DOCX, PNG, and JPEG files up to 25MB each. All uploaded documents undergo automated SHA-256 fingerprint generation upon upload.',
+    views: 870
+  }
+];
+
+export const initialSupportTickets: SupportTicket[] = [
+  {
+    id: 'TCK-8921',
+    subject: 'Verification status pending for Columbia Degree Certificate',
+    category: 'Document Vault',
+    priority: 'medium',
+    status: 'in_progress',
+    createdAt: '2026-08-26 14:30',
+    lastReply: 'Academic Registrar is currently validating credential batch #419.'
+  },
+  {
+    id: 'TCK-8410',
+    subject: 'Requesting API key for automated GitHub repository sync',
+    category: 'Skill Passport',
+    priority: 'low',
+    status: 'resolved',
+    createdAt: '2026-08-20 09:15',
+    lastReply: 'GitHub Webhook integration enabled for user repository @brajesh-nexus.'
+  }
+];
+
+export const initialSessionData: SessionInfo = {
+  userId: 'usr_brajesh_01',
+  name: 'Brajesh',
+  email: 'brajeshpanigrahi7@gmail.com',
+  role: 'student',
+  avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvIFryGeZhW2_6QT4ZOGkLkLicIBavQaCCv83Z27nG_Mmb8s0iadNzAn8mecc3yUeARbDtlRVA4bknRtfnz-ULcXWbR5XXvfA0iSwCfHyCoC1SvMkEcVuf_hkYnwU1kP8S-OXuvXYkUtAob5Kk-rJ2dICHUKFWI5AG4EZghK-Ir54yHMtdIHqhRRZOUTnD_D2QwOX1ctOJJ9RKeD02anBiNGgbtHSV75YP8ViqE47Ljh7xxR8GZFmYyA',
+  ipAddress: '198.51.100.42 (Secure VPN)',
+  location: 'New York, NY, United States',
+  device: 'MacBook Pro 16" (Apple M3 Max)',
+  browser: 'Google Chrome v128.0 (Enterprise Sandbox)',
+  loginTime: 'Today at 08:30 AM EST',
+  sessionToken: 'nexus_jwt_8f2db14e99a120fc64bca883109e22aa_auth',
+  status: 'active'
+};
+
+export const mockAvailableAccounts = [
+  {
+    userId: 'usr_brajesh_01',
+    name: 'Brajesh',
+    email: 'brajeshpanigrahi7@gmail.com',
+    role: 'student' as const,
+    title: 'Senior Data Analyst | Enterprise Operations',
+    institution: 'Columbia University School of Engineering',
+    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvIFryGeZhW2_6QT4ZOGkLkLicIBavQaCCv83Z27nG_Mmb8s0iadNzAn8mecc3yUeARbDtlRVA4bknRtfnz-ULcXWbR5XXvfA0iSwCfHyCoC1SvMkEcVuf_hkYnwU1kP8S-OXuvXYkUtAob5Kk-rJ2dICHUKFWI5AG4EZghK-Ir54yHMtdIHqhRRZOUTnD_D2QwOX1ctOJJ9RKeD02anBiNGgbtHSV75YP8ViqE47Ljh7xxR8GZFmYyA'
+  },
+  {
+    userId: 'usr_sarah_recruiter',
+    name: 'Sarah Lin',
+    email: 'sarah.lin@siemens-talent.com',
+    role: 'recruiter' as const,
+    title: 'Lead Technical Talent Partner',
+    institution: 'Siemens Enterprise Digital Solutions',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    userId: 'usr_marcus_prof',
+    name: 'Dr. Marcus Vance',
+    email: 'm.vance@columbia.edu',
+    role: 'academician' as const,
+    title: 'Professor & Director of Distributed Systems',
+    institution: 'Columbia University Department of Computer Science',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+  },
+  {
+    userId: 'usr_admin_dean',
+    name: 'Dean Elena Rostova',
+    email: 'admin.dean@nexus-edu.org',
+    role: 'institution_admin' as const,
+    title: 'Dean of Academic Innovation & Partnerships',
+    institution: 'Nexus Higher Education Consortium',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80'
+  }
+];
+

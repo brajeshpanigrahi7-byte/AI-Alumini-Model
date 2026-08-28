@@ -7,7 +7,10 @@ import {
   WifiOff, 
   Sparkles,
   CheckCircle2,
-  X
+  X,
+  User,
+  LogOut,
+  LifeBuoy
 } from 'lucide-react';
 import { UserRole, LanguageCode, NotificationItem } from '../types';
 import { translations } from '../data/initialData';
@@ -24,6 +27,7 @@ interface TopNavBarProps {
   searchQuery: string;
   onSearchChange: (q: string) => void;
   onNavigateToTab: (tab: any) => void;
+  onOpenLogout?: () => void;
   userAvatar: string;
 }
 
@@ -39,11 +43,13 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   searchQuery,
   onSearchChange,
   onNavigateToTab,
+  onOpenLogout,
   userAvatar
 }) => {
   const [showNotifications, setShowNotifications] = React.useState(false);
   const [showLangMenu, setShowLangMenu] = React.useState(false);
   const [showRoleMenu, setShowRoleMenu] = React.useState(false);
+  const [showUserMenu, setShowUserMenu] = React.useState(false);
 
   const t = translations[currentLanguage] || translations.en;
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -236,17 +242,71 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
           )}
         </div>
 
-        {/* User Profile Avatar Thumbnail */}
-        <div 
-          className="cursor-pointer flex items-center gap-2 p-1 rounded-lg hover:bg-[#EBE8E1] transition-colors"
-          onClick={() => onNavigateToTab('profile')}
-        >
-          <img
-            id="top-nav-avatar"
-            src={userAvatar}
-            alt="User profile"
-            className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9] shadow-xs"
-          />
+        {/* User Profile Avatar Thumbnail & Dropdown */}
+        <div className="relative">
+          <div 
+            id="top-nav-avatar-btn"
+            className="cursor-pointer flex items-center gap-2 p-1 rounded-lg hover:bg-[#EBE8E1] transition-colors"
+            onClick={() => {
+              setShowUserMenu(!showUserMenu);
+              setShowNotifications(false);
+              setShowLangMenu(false);
+              setShowRoleMenu(false);
+            }}
+          >
+            <img
+              id="top-nav-avatar"
+              src={userAvatar}
+              alt="User profile"
+              className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9] shadow-xs"
+            />
+          </div>
+
+          {showUserMenu && (
+            <div className="absolute right-0 mt-2 w-56 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2">
+              <div className="px-3 py-2 border-b border-[#E5E2D9]">
+                <p className="text-xs font-bold text-[#2D2D2A]">Brajesh</p>
+                <p className="text-[11px] text-[#7C7B76] truncate font-mono">brajeshpanigrahi7@gmail.com</p>
+              </div>
+
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    onNavigateToTab('profile');
+                    setShowUserMenu(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-xs flex items-center gap-2.5 text-[#5F5E59] hover:text-[#2D2D2A] hover:bg-[#EBE8E1] transition-colors cursor-pointer"
+                >
+                  <User className="w-4 h-4 text-[#5A5A40]" />
+                  <span>My Digital Profile</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    onNavigateToTab('help_center');
+                    setShowUserMenu(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-xs flex items-center gap-2.5 text-[#5F5E59] hover:text-[#2D2D2A] hover:bg-[#EBE8E1] transition-colors cursor-pointer"
+                >
+                  <LifeBuoy className="w-4 h-4 text-[#5A5A40]" />
+                  <span>Help Center & Support</span>
+                </button>
+              </div>
+
+              <div className="border-t border-[#E5E2D9] pt-1">
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    if (onOpenLogout) onOpenLogout();
+                  }}
+                  className="w-full text-left px-3 py-2 text-xs flex items-center gap-2.5 text-[#8C5E3C] hover:bg-[#F4ECE4] transition-colors cursor-pointer font-semibold"
+                >
+                  <LogOut className="w-4 h-4 text-[#8C5E3C]" />
+                  <span>Logout & Session</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>

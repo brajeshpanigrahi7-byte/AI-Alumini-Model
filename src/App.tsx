@@ -33,11 +33,14 @@ import { AcademicianHubView } from './components/AcademicianHubView';
 import { AnalyticsView } from './components/AnalyticsView';
 import { DocumentVaultView } from './components/DocumentVaultView';
 import { CollaborationHubView } from './components/CollaborationHubView';
+import { HelpCenterView } from './components/HelpCenterView';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { PostOpportunityModal } from './components/Modals/PostOpportunityModal';
 import { PublicPortfolioModal } from './components/Modals/PublicPortfolioModal';
 import { ResumeModal } from './components/Modals/ResumeModal';
 import { AddMilestoneModal } from './components/Modals/AddMilestoneModal';
+import { LogoutModal } from './components/Modals/LogoutModal';
+import { mockAvailableAccounts } from './data/initialData';
 
 export default function App() {
   // Local persistence states
@@ -93,6 +96,8 @@ export default function App() {
   const [isPublicViewOpen, setIsPublicViewOpen] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isAddMilestoneOpen, setIsAddMilestoneOpen] = useState(false);
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
 
   // Sync to local storage
   useEffect(() => {
@@ -254,6 +259,81 @@ export default function App() {
     setDocuments(prev => [doc, ...prev]);
   };
 
+  const handleSwitchAccount = (account: typeof mockAvailableAccounts[0]) => {
+    setCurrentRole(account.role);
+    setUserProfile(prev => ({
+      ...prev,
+      name: account.name,
+      email: account.email,
+      role: account.role,
+      title: account.title,
+      institution: account.institution,
+      avatar: account.avatar
+    }));
+    const newNotif: NotificationItem = {
+      id: `notif_${Date.now()}`,
+      title: `Switched Persona to ${account.name}`,
+      message: `Role updated to ${account.role}. Access controls and relevant modules refreshed.`,
+      timestamp: 'Just now',
+      read: false,
+      type: 'system',
+      linkTab: 'profile'
+    };
+    setNotifications(prev => [newNotif, ...prev]);
+  };
+
+  const handleConfirmLogout = (allDevices: boolean) => {
+    setIsLogoutOpen(false);
+    setIsLoggedOut(true);
+  };
+
+  const handleReLogin = (account = mockAvailableAccounts[0]) => {
+    handleSwitchAccount(account);
+    setIsLoggedOut(false);
+  };
+
+  if (isLoggedOut) {
+    return (
+      <div className="bg-[#F2F1ED] text-[#2D2D2A] min-h-screen flex items-center justify-center p-4 antialiased selection:bg-[#5A5A40] selection:text-[#F9F9F7]">
+        <div className="bg-[#F9F9F7] max-w-md w-full rounded-2xl p-8 border border-[#E5E2D9] shadow-xl text-center space-y-6 animate-in zoom-in-95">
+          <div className="w-16 h-16 rounded-2xl bg-[#E8E8DF] flex items-center justify-center mx-auto border border-[#D5D5C6] shadow-xs">
+            <span className="font-serif-display font-bold text-2xl text-[#5A5A40]">SN</span>
+          </div>
+
+          <div>
+            <h1 className="text-xl font-bold text-[#2D2D2A] font-serif-display">Signed Out Securely</h1>
+            <p className="text-xs text-[#5F5E59] mt-1 leading-relaxed">
+              Your cryptographic session tokens have been cleared. Select an enterprise account or student persona to resume.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            {mockAvailableAccounts.map((acc) => (
+              <button
+                key={acc.userId}
+                onClick={() => handleReLogin(acc)}
+                className="w-full p-3 rounded-xl border border-[#E5E2D9] bg-[#F2F1ED]/60 hover:bg-[#E8E8DF] flex items-center justify-between text-left transition-all cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <img src={acc.avatar} alt={acc.name} className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9]" />
+                  <div>
+                    <p className="font-bold text-xs text-[#2D2D2A]">{acc.name}</p>
+                    <p className="text-[10px] text-[#7C7B76] capitalize">{acc.role.replace('_', ' ')} • {acc.institution.split(' ')[0]}</p>
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-[#5A5A40] group-hover:translate-x-0.5 transition-transform">Sign in &rarr;</span>
+              </button>
+            ))}
+          </div>
+
+          <p className="text-[11px] text-[#7C7B76]">
+            SkillBridge Nexus Enterprise Single Sign-On (SSO) v3.4.2
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-[#F2F1ED] text-[#2D2D2A] min-h-screen flex flex-col md:flex-row antialiased selection:bg-[#5A5A40] selection:text-[#F9F9F7]">
       {/* Top Navbar */}
@@ -269,6 +349,7 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onNavigateToTab={setActiveTab}
+        onOpenLogout={() => setIsLogoutOpen(true)}
         userAvatar={userProfile.avatar}
       />
 
@@ -277,6 +358,7 @@ export default function App() {
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onOpenPostOpportunity={() => setIsPostOpportunityOpen(true)}
+        onOpenLogout={() => setIsLogoutOpen(true)}
         currentLanguage={currentLanguage}
         currentRole={currentRole}
       />
@@ -377,6 +459,13 @@ export default function App() {
         {activeTab === 'collaboration' && (
           <CollaborationHubView />
         )}
+
+        {activeTab === 'help_center' && (
+          <HelpCenterView 
+            currentLanguage={currentLanguage}
+            onNavigateToTab={setActiveTab}
+          />
+        )}
       </main>
 
       {/* Mobile Bottom Navigation Bar */}
@@ -408,6 +497,14 @@ export default function App() {
         isOpen={isAddMilestoneOpen}
         onClose={() => setIsAddMilestoneOpen(false)}
         onAddMilestone={handleAddMilestone}
+      />
+
+      <LogoutModal
+        isOpen={isLogoutOpen}
+        onClose={() => setIsLogoutOpen(false)}
+        userProfile={userProfile}
+        onSwitchAccount={handleSwitchAccount}
+        onConfirmLogout={handleConfirmLogout}
       />
     </div>
   );

@@ -10,7 +10,8 @@ export type ActiveTab =
   | 'academician_hub'
   | 'analytics'
   | 'documents'
-  | 'collaboration';
+  | 'collaboration'
+  | 'help_center';
 
 export type LanguageCode = 'en' | 'es' | 'hi' | 'fr' | 'de' | 'ja';
 
@@ -224,3 +225,57 @@ export interface NotificationItem {
   type: 'opportunity' | 'assessment' | 'application' | 'mentor' | 'system';
   linkTab?: ActiveTab;
 }
+
+export interface HelpCategory {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  articleCount: number;
+}
+
+export interface HelpArticle {
+  id: string;
+  categoryId: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  tags: string[];
+  readTime: string;
+  helpfulCount: number;
+  lastUpdated: string;
+}
+
+export interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  views: number;
+}
+
+export interface SupportTicket {
+  id: string;
+  subject: string;
+  category: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'open' | 'in_progress' | 'resolved';
+  createdAt: string;
+  lastReply: string;
+}
+
+export interface SessionInfo {
+  userId: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  avatar: string;
+  ipAddress: string;
+  location: string;
+  device: string;
+  browser: string;
+  loginTime: string;
+  sessionToken: string;
+  status: 'active' | 'expired';
+}
+
