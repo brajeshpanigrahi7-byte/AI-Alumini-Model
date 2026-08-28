@@ -19,6 +19,8 @@ import {
   initialMentorships, 
   initialApplications,
   initialNotifications,
+  roleProfilesMap,
+  mockAvailableAccounts,
   translations 
 } from './data/initialData';
 import { TopNavBar } from './components/TopNavBar';
@@ -40,7 +42,7 @@ import { PublicPortfolioModal } from './components/Modals/PublicPortfolioModal';
 import { ResumeModal } from './components/Modals/ResumeModal';
 import { AddMilestoneModal } from './components/Modals/AddMilestoneModal';
 import { LogoutModal } from './components/Modals/LogoutModal';
-import { mockAvailableAccounts } from './data/initialData';
+import { GitHubPushModal } from './components/Modals/GitHubPushModal';
 
 // Safely reads and parses a value from localStorage.
 // If the key doesn't exist, or the saved data is corrupted/invalid JSON,
@@ -57,7 +59,7 @@ function loadFromStorage<T>(key: string, fallback: T): T {
 
 export default function App() {
   // Local persistence states
-  const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
   const [currentRole, setCurrentRole] = useState<UserRole>('student');
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('en');
   const [isOffline, setIsOffline] = useState<boolean>(false);
@@ -103,6 +105,7 @@ export default function App() {
   const [isAddMilestoneOpen, setIsAddMilestoneOpen] = useState(false);
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const [isGitHubPushOpen, setIsGitHubPushOpen] = useState(false);
 
   // Sync to local storage
   useEffect(() => {
@@ -281,17 +284,38 @@ export default function App() {
     setDocuments(prev => [doc, ...prev]);
   };
 
+  const handleRoleChange = (newRole: UserRole) => {
+    setCurrentRole(newRole);
+    if (roleProfilesMap[newRole]) {
+      setUserProfile(roleProfilesMap[newRole]);
+    }
+    const newNotif: NotificationItem = {
+      id: `notif_${Date.now()}`,
+      title: `Role Switched to ${newRole.replace('_', ' ').toUpperCase()}`,
+      message: `Active persona and specialized dashboard updated for ${roleProfilesMap[newRole]?.name || newRole}.`,
+      timestamp: 'Just now',
+      read: false,
+      type: 'system',
+      linkTab: 'dashboard'
+    };
+    setNotifications(prev => [newNotif, ...prev]);
+  };
+
   const handleSwitchAccount = (account: typeof mockAvailableAccounts[0]) => {
     setCurrentRole(account.role);
-    setUserProfile(prev => ({
-      ...prev,
-      name: account.name,
-      email: account.email,
-      role: account.role,
-      title: account.title,
-      institution: account.institution,
-      avatar: account.avatar
-    }));
+    if (roleProfilesMap[account.role]) {
+      setUserProfile(roleProfilesMap[account.role]);
+    } else {
+      setUserProfile(prev => ({
+        ...prev,
+        name: account.name,
+        email: account.email,
+        role: account.role,
+        title: account.title,
+        institution: account.institution,
+        avatar: account.avatar
+      }));
+    }
     const newNotif: NotificationItem = {
       id: `notif_${Date.now()}`,
       title: `Switched Persona to ${account.name}`,
@@ -299,7 +323,7 @@ export default function App() {
       timestamp: 'Just now',
       read: false,
       type: 'system',
-      linkTab: 'profile'
+      linkTab: 'dashboard'
     };
     setNotifications(prev => [newNotif, ...prev]);
   };
@@ -363,7 +387,7 @@ export default function App() {
         currentLanguage={currentLanguage}
         onLanguageChange={setCurrentLanguage}
         currentRole={currentRole}
-        onRoleChange={setCurrentRole}
+        onRoleChange={handleRoleChange}
         isOffline={isOffline}
         onToggleOffline={() => setIsOffline(!isOffline)}
         notifications={notifications}
@@ -372,6 +396,7 @@ export default function App() {
         onSearchChange={setSearchQuery}
         onNavigateToTab={setActiveTab}
         onOpenLogout={() => setIsLogoutOpen(true)}
+        onOpenGitHubPush={() => setIsGitHubPushOpen(true)}
         userAvatar={userProfile.avatar}
       />
 
@@ -381,6 +406,7 @@ export default function App() {
         onTabChange={setActiveTab}
         onOpenPostOpportunity={() => setIsPostOpportunityOpen(true)}
         onOpenLogout={() => setIsLogoutOpen(true)}
+        onOpenGitHubPush={() => setIsGitHubPushOpen(true)}
         currentLanguage={currentLanguage}
         currentRole={currentRole}
       />
@@ -422,6 +448,7 @@ export default function App() {
             assessments={assessments}
             applications={applications}
             onNavigate={setActiveTab}
+            onOpenPostOpportunity={() => setIsPostOpportunityOpen(true)}
           />
         )}
 
@@ -528,6 +555,12 @@ export default function App() {
         userProfile={userProfile}
         onSwitchAccount={handleSwitchAccount}
         onConfirmLogout={handleConfirmLogout}
+      />
+
+      <GitHubPushModal
+        isOpen={isGitHubPushOpen}
+        onClose={() => setIsGitHubPushOpen(false)}
+        userEmail={userProfile.email}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import { 
   UserProfile, 
+  UserRole,
   Assessment, 
   Opportunity, 
   LearningProgram, 
@@ -148,6 +149,382 @@ export const initialUserProfile: UserProfile = {
     }
   ]
 };
+
+export const recruiterUserProfile: UserProfile = {
+  id: 'usr_sarah_recruiter',
+  name: 'Sarah Lin',
+  email: 'sarah.lin@siemens-talent.com',
+  title: 'Lead Technical Talent Partner | Emerging Tech',
+  avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+  role: 'recruiter',
+  location: 'Munich, DE & New York, NY',
+  verified: true,
+  completionPercentage: 96,
+  institution: 'Siemens Enterprise Digital Solutions',
+  department: 'Global University Talent Acquisition & Corporate Partnerships',
+  gpa: 'MBA - Technology Human Capital',
+  graduationYear: '2018',
+  bio: 'Talent Acquisition Leader at Siemens specializing in sourcing high-caliber engineering, data science, and AI students from top universities globally. Driving industry-academia capstone cohorts, internship programs, and direct campus recruiting drives.',
+  resumeUrl: '#',
+  linkedin: 'https://linkedin.com/in/sarahlin-talent',
+  companyOverview: {
+    companyName: 'Siemens Enterprise Digital Solutions',
+    industry: 'Industrial Automation & Enterprise AI',
+    companySize: '10,000+ Employees (Global)',
+    hqLocation: 'Munich, Germany / New York, USA',
+    verifiedEnterprise: true,
+    openRolesCount: 14,
+    website: 'https://siemens.com/careers',
+    hiringDomains: ['AI / Machine Learning', 'Cloud Infrastructure', 'Industrial IoT', 'Full-Stack Software', 'Data Analytics'],
+    placementDrivesCount: 6
+  },
+  milestones: [
+    {
+      id: 'rm1',
+      title: 'Verified Enterprise Recruiter Status',
+      date: 'January 2024',
+      category: 'certification',
+      description: 'Awarded Tier-1 verified enterprise talent acquisition badge by SkillBridge University Consortium.',
+      issuer: 'SkillBridge Governance Council',
+      verified: true,
+      verificationHash: '0x44f1...89bc'
+    },
+    {
+      id: 'rm2',
+      title: '150+ Top-Tier Engineers Hired',
+      date: 'December 2025',
+      category: 'achievement',
+      description: 'Successfully sourced, interviewed, and onboarded over 150 university graduates across 12 university campuses.',
+      issuer: 'Siemens Talent Board',
+      verified: true,
+      verificationHash: '0x88e2...12ad'
+    },
+    {
+      id: 'rm3',
+      title: 'Global University Partnership Lead',
+      date: 'May 2026',
+      category: 'internship',
+      description: 'Established MoUs with 8 Tier-1 universities for direct student internship and faculty fellowship pipelines.',
+      issuer: 'Higher Education Board',
+      verified: true,
+      verificationHash: '0x99c4...ff51'
+    }
+  ],
+  skills: [
+    { id: 'rs1', name: 'Technical Sourcing & Pipeline', category: 'Technical', proficiency: 98, verified: true, endorsementsCount: 42, industryBenchmark: 85 },
+    { id: 'rs2', name: 'Candidate Assessment & Scoring', category: 'Analytical', proficiency: 94, verified: true, endorsementsCount: 38, industryBenchmark: 80 },
+    { id: 'rs3', name: 'Campus Placement Drives', category: 'Domain', proficiency: 95, verified: true, endorsementsCount: 46, industryBenchmark: 85 },
+    { id: 'rs4', name: 'Talent Market Intelligence', category: 'Analytical', proficiency: 88, verified: true, endorsementsCount: 29, industryBenchmark: 75 },
+    { id: 'rs5', name: 'University Relations & MoUs', category: 'Domain', proficiency: 92, verified: true, endorsementsCount: 35, industryBenchmark: 80 },
+    { id: 'rs6', name: 'Executive Stakeholder Alignment', category: 'Soft Skills', proficiency: 96, verified: true, endorsementsCount: 40, industryBenchmark: 85 }
+  ],
+  certifications: [
+    {
+      id: 'rc1',
+      name: 'AIRS Certified Internet Recruiter (CIR)',
+      issuer: 'AIRS Powered by ADP',
+      issueDate: 'Mar 2023',
+      expiryDate: 'Mar 2027',
+      credentialId: 'AIRS-CIR-2023-994',
+      credentialUrl: 'https://airs.com/verify',
+      verified: true,
+      badgeIcon: 'award',
+      skills: ['Talent Sourcing', 'Boolean Search', 'Candidate Engagement']
+    },
+    {
+      id: 'rc2',
+      name: 'SHRM Senior Certified Professional (SHRM-SCP)',
+      issuer: 'Society for Human Resource Management',
+      issueDate: 'Nov 2022',
+      expiryDate: 'Nov 2026',
+      credentialId: 'SHRM-SCP-88412',
+      credentialUrl: 'https://shrm.org/credentials',
+      verified: true,
+      badgeIcon: 'shield',
+      skills: ['Strategic HR', 'Workforce Planning', 'Diversity Hiring']
+    }
+  ],
+  projects: [
+    {
+      id: 'rp1',
+      title: 'Siemens AI Graduate Fellowship 2026',
+      role: 'Program Director',
+      duration: 'Ongoing (2026)',
+      description: 'Directing a multi-campus hiring campaign recruiting 30 Master and PhD students into Siemens Industrial AI Labs.',
+      techStack: ['Campus Drives', 'Coding Benchmarks', 'Hackathons', 'Direct Hiring'],
+      verifiedByFaculty: 'Consortium Placement Board'
+    },
+    {
+      id: 'rp2',
+      title: 'University Capstone Mentorship Initiative',
+      role: 'Industry Mentor Lead',
+      duration: '6 Months (2025)',
+      description: 'Mentored 8 student teams across Columbia, MIT, and Stanford on real-world industrial IoT automation capstones.',
+      techStack: ['Mentorship', 'Code Reviews', 'Design Sprints'],
+      verifiedByFaculty: 'Prof. Marcus Vance'
+    }
+  ]
+};
+
+export const academicianUserProfile: UserProfile = {
+  id: 'usr_marcus_prof',
+  name: 'Dr. Marcus Vance',
+  email: 'm.vance@columbia.edu',
+  title: 'Professor & Director of Distributed Systems Lab',
+  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+  role: 'academician',
+  location: 'New York, NY',
+  verified: true,
+  completionPercentage: 98,
+  institution: 'Columbia University Department of Computer Science',
+  department: 'Distributed Systems, Cloud & Machine Learning Systems',
+  gpa: 'Ph.D. in Computer Science (MIT)',
+  graduationYear: '2012',
+  bio: 'Tenured Professor and researcher specializing in large-scale distributed consensus, cloud systems, and machine learning infrastructure. Committed to bridging modern curriculum with high-impact corporate industry research and mentoring students.',
+  resumeUrl: '#',
+  linkedin: 'https://linkedin.com/in/prof-marcus-vance',
+  academicOverview: {
+    designation: 'Full Professor & Laboratory Director',
+    facultyId: 'CU-FAC-CS-8921',
+    hIndex: 32,
+    citationsCount: 4850,
+    publications: [
+      {
+        id: 'pub1',
+        title: 'Low-Latency Distributed Consensus Protocols for Cloud Microservices',
+        journal: 'IEEE Transactions on Parallel and Distributed Systems (TPDS)',
+        year: '2025',
+        doi: '10.1109/TPDS.2025.109281',
+        citations: 142
+      },
+      {
+        id: 'pub2',
+        title: 'Scalable Distributed Graph Analytics using Asynchronous Ring Topology',
+        journal: 'ACM Symposium on Operating Systems Principles (SOSP)',
+        year: '2024',
+        doi: '10.1145/SOSP.2024.99281',
+        citations: 289
+      },
+      {
+        id: 'pub3',
+        title: 'Curriculum-Industry Alignment: Embedding Real-Time Telemetry into Computer Science Education',
+        journal: 'IEEE Transactions on Education',
+        year: '2023',
+        doi: '10.1109/TE.2023.77812',
+        citations: 96
+      }
+    ],
+    researchGrants: [
+      {
+        id: 'rg1',
+        title: 'Next-Generation Autonomous Edge Consensus Architecture',
+        fundingAgency: 'National Science Foundation (NSF)',
+        amount: '$500,000',
+        status: 'Active'
+      },
+      {
+        id: 'rg2',
+        title: 'Enterprise AI Telemetry & Predictive Safety Optimization',
+        fundingAgency: 'Siemens Corporate Research Grant',
+        amount: '$180,000',
+        status: 'Active'
+      }
+    ],
+    teachingCourses: [
+      'COMS 4118: Advanced Operating Systems',
+      'COMS 6111: Distributed Systems at Cloud Scale',
+      'COMS 4995: Industry Capstone Project Lab'
+    ]
+  },
+  milestones: [
+    {
+      id: 'am1',
+      title: 'NSF CAREER Award Winner',
+      date: 'September 2021',
+      category: 'achievement',
+      description: 'Recognized by the National Science Foundation for breakthrough contributions to distributed fault-tolerant computing.',
+      issuer: 'National Science Foundation',
+      verified: true,
+      verificationHash: '0x992a...cc10'
+    },
+    {
+      id: 'am2',
+      title: 'Verified Faculty Development Program (FDP) Lead',
+      date: 'April 2025',
+      category: 'certification',
+      description: 'Conducted national level Faculty Development Program on Cloud Native ML Engineering for 120 participating academicians.',
+      issuer: 'AICTE / Nexus Higher Education',
+      verified: true,
+      verificationHash: '0x33b1...77d2'
+    },
+    {
+      id: 'am3',
+      title: '45+ Masters & Ph.D. Theses Supervised',
+      date: 'June 2026',
+      category: 'education',
+      description: 'Graduated over 45 graduate researchers now placed at Google DeepMind, MIT, Stanford, Apple, and Siemens.',
+      issuer: 'Columbia University Graduate Council',
+      verified: true,
+      verificationHash: '0x12c4...e890'
+    }
+  ],
+  skills: [
+    { id: 'as1', name: 'Distributed Systems & Consensus', category: 'Technical', proficiency: 98, verified: true, endorsementsCount: 64, industryBenchmark: 90 },
+    { id: 'as2', name: 'Curriculum & Pedagogy Design', category: 'Domain', proficiency: 96, verified: true, endorsementsCount: 52, industryBenchmark: 85 },
+    { id: 'as3', name: 'Student Research Mentorship', category: 'Soft Skills', proficiency: 95, verified: true, endorsementsCount: 58, industryBenchmark: 85 },
+    { id: 'as4', name: 'Research Grant Administration', category: 'Analytical', proficiency: 92, verified: true, endorsementsCount: 41, industryBenchmark: 80 },
+    { id: 'as5', name: 'Industry-Academia Sabbaticals', category: 'Domain', proficiency: 90, verified: true, endorsementsCount: 39, industryBenchmark: 75 }
+  ],
+  certifications: [
+    {
+      id: 'ac1',
+      name: 'IEEE Senior Member Fellow',
+      issuer: 'Institute of Electrical and Electronics Engineers',
+      issueDate: 'Jan 2020',
+      credentialId: 'IEEE-SM-884129',
+      credentialUrl: 'https://ieee.org/fellows',
+      verified: true,
+      badgeIcon: 'award',
+      skills: ['Distributed Systems', 'Peer Review', 'Technical Leadership']
+    },
+    {
+      id: 'ac2',
+      name: 'AWS Solutions Architect Academic Fellow',
+      issuer: 'Amazon Web Services Education',
+      issueDate: 'Jul 2024',
+      expiryDate: 'Jul 2027',
+      credentialId: 'AWS-AA-2024-991',
+      credentialUrl: 'https://aws.amazon.com/training',
+      verified: true,
+      badgeIcon: 'cloud',
+      skills: ['Cloud Architecture', 'Serverless', 'High Availability']
+    }
+  ],
+  projects: [
+    {
+      id: 'ap1',
+      title: 'EdgeConsensus: Ultra-Low Latency Protocol',
+      role: 'Principal Investigator',
+      duration: '2 Years (2024-2026)',
+      description: 'Architecting an open-source consensus library designed for heterogeneous edge devices and IoT cluster meshes.',
+      techStack: ['Rust', 'gRPC', 'Raft Algorithm', 'Linux Kernel eBPF'],
+      githubUrl: 'https://github.com/vance-lab/edge-consensus',
+      verifiedByFaculty: 'Columbia Research Council'
+    }
+  ]
+};
+
+export const adminUserProfile: UserProfile = {
+  id: 'usr_admin_dean',
+  name: 'Dean Elena Rostova',
+  email: 'admin.dean@nexus-edu.org',
+  title: 'Dean of Academic Innovation & Partnerships',
+  avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+  role: 'institution_admin',
+  location: 'Boston, MA & New York, NY',
+  verified: true,
+  completionPercentage: 100,
+  institution: 'Nexus Higher Education Consortium',
+  department: 'Office of Academic Affairs & Institutional Governance',
+  gpa: 'Ed.D. Higher Education Policy (Harvard)',
+  graduationYear: '2008',
+  bio: 'Academic executive and institutional strategist overseeing academic innovation, NAAC/ABET accreditation, corporate industry MoUs, and student employability outcomes across 8 engineering & computing departments.',
+  resumeUrl: '#',
+  linkedin: 'https://linkedin.com/in/dean-elena-rostova',
+  institutionOverview: {
+    accreditationScore: 'NAAC A++ (Score: 3.78/4.00)',
+    nirfRank: 'Rank #4 (National Tier-1 Engineering)',
+    totalStudents: 4850,
+    placementRate: '94.2%',
+    activeMoUsCount: 42,
+    signingAuthority: 'Elena Rostova, Dean & Master Registrar Authority',
+    masterCryptoKey: '0x99a1...ff82 (Consortium Root Authority)',
+    establishedYear: '1984',
+    campusLocation: 'Consortium Central Campus, New York, NY'
+  },
+  milestones: [
+    {
+      id: 'adm1',
+      title: 'NAAC A++ Institutional Re-Accreditation',
+      date: 'February 2024',
+      category: 'achievement',
+      description: 'Secured highest grade accreditation (CGPA 3.78/4.00) with special commendation for industry-aligned curriculum.',
+      issuer: 'National Assessment and Accreditation Council',
+      verified: true,
+      verificationHash: '0x77e1...99bc'
+    },
+    {
+      id: 'adm2',
+      title: '42 Active Tier-1 Corporate MoUs',
+      date: 'May 2026',
+      category: 'internship',
+      description: 'Formalized strategic academic partnerships with Siemens, Google Cloud, Microsoft, IBM, Tesla, and Bloomberg.',
+      issuer: 'Institutional Corporate Council',
+      verified: true,
+      verificationHash: '0x66f4...33a1'
+    },
+    {
+      id: 'adm3',
+      title: '$12M Industry Sponsored Innovation Labs',
+      date: 'August 2025',
+      category: 'achievement',
+      description: 'Established state-of-the-art AI, IoT, and CleanTech research laboratories fully sponsored by corporate partners.',
+      issuer: 'Consortium Board of Trustees',
+      verified: true,
+      verificationHash: '0x22d8...55ef'
+    }
+  ],
+  skills: [
+    { id: 'adms1', name: 'Institutional Governance & Policy', category: 'Domain', proficiency: 99, verified: true, endorsementsCount: 72, industryBenchmark: 90 },
+    { id: 'adms2', name: 'Accreditation Compliance (NAAC/ABET)', category: 'Domain', proficiency: 98, verified: true, endorsementsCount: 65, industryBenchmark: 88 },
+    { id: 'adms3', name: 'Corporate Industry Partnerships', category: 'Domain', proficiency: 96, verified: true, endorsementsCount: 60, industryBenchmark: 85 },
+    { id: 'adms4', name: 'Campus Placement Strategy', category: 'Analytical', proficiency: 94, verified: true, endorsementsCount: 55, industryBenchmark: 85 },
+    { id: 'adms5', name: 'Digital Credential Cryptography', category: 'Technical', proficiency: 90, verified: true, endorsementsCount: 48, industryBenchmark: 80 }
+  ],
+  certifications: [
+    {
+      id: 'admc1',
+      name: 'Certified Higher Education Executive (CHEE)',
+      issuer: 'Higher Education Leadership Academy',
+      issueDate: 'May 2021',
+      credentialId: 'CHEE-USA-88219',
+      credentialUrl: 'https://hela.edu/verify',
+      verified: true,
+      badgeIcon: 'award',
+      skills: ['Institutional Leadership', 'Strategic Planning', 'Resource Allocation']
+    },
+    {
+      id: 'admc2',
+      name: 'Accreditation Lead Auditor Fellow',
+      issuer: 'International Quality Assurance Council',
+      issueDate: 'Oct 2023',
+      credentialId: 'IQAC-AF-2023-77',
+      credentialUrl: 'https://iqac.org/directory',
+      verified: true,
+      badgeIcon: 'shield',
+      skills: ['Quality Assurance', 'Academic Audits', 'Compliance Reporting']
+    }
+  ],
+  projects: [
+    {
+      id: 'admp1',
+      title: 'Consortium Digital Skill Passport Platform',
+      role: 'Executive Sponsor',
+      duration: '1.5 Years (2025-2026)',
+      description: 'Spearheading the implementation of tamper-proof digital degree and skill passports verified directly on consortium ledger.',
+      techStack: ['SkillBridge Nexus', 'Cryptographic Signatures', 'NAAC Integration'],
+      verifiedByFaculty: 'Consortium Executive Board'
+    }
+  ]
+};
+
+export const roleProfilesMap: Record<UserRole, UserProfile> = {
+  student: initialUserProfile,
+  recruiter: recruiterUserProfile,
+  academician: academicianUserProfile,
+  institution_admin: adminUserProfile
+};
+
 
 export const initialAssessments: Assessment[] = [
   {

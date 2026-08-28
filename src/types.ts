@@ -85,6 +85,51 @@ export interface UserProfile {
   skills: SkillItem[];
   certifications: Certification[];
   projects: ProjectItem[];
+  // Role-specific extensions
+  companyOverview?: {
+    companyName: string;
+    industry: string;
+    companySize: string;
+    hqLocation: string;
+    verifiedEnterprise: boolean;
+    openRolesCount: number;
+    website: string;
+    hiringDomains: string[];
+    placementDrivesCount: number;
+  };
+  academicOverview?: {
+    designation: string;
+    facultyId: string;
+    hIndex: number;
+    citationsCount: number;
+    publications: {
+      id: string;
+      title: string;
+      journal: string;
+      year: string;
+      doi: string;
+      citations: number;
+    }[];
+    researchGrants: {
+      id: string;
+      title: string;
+      fundingAgency: string;
+      amount: string;
+      status: 'Active' | 'Under Review' | 'Completed';
+    }[];
+    teachingCourses: string[];
+  };
+  institutionOverview?: {
+    accreditationScore: string;
+    nirfRank: string;
+    totalStudents: number;
+    placementRate: string;
+    activeMoUsCount: number;
+    signingAuthority: string;
+    masterCryptoKey: string;
+    establishedYear: string;
+    campusLocation: string;
+  };
 }
 
 export interface AssessmentQuestion {

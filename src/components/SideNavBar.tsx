@@ -12,7 +12,8 @@ import {
   Handshake, 
   LifeBuoy, 
   LogOut,
-  PlusCircle
+  PlusCircle,
+  UploadCloud
 } from 'lucide-react';
 import { ActiveTab, LanguageCode, UserRole } from '../types';
 import { translations } from '../data/initialData';
@@ -22,6 +23,7 @@ interface SideNavBarProps {
   onTabChange: (tab: ActiveTab) => void;
   onOpenPostOpportunity: () => void;
   onOpenLogout: () => void;
+  onOpenGitHubPush?: () => void;
   currentLanguage: LanguageCode;
   currentRole: UserRole;
 }
@@ -31,6 +33,7 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
   onTabChange,
   onOpenPostOpportunity,
   onOpenLogout,
+  onOpenGitHubPush,
   currentLanguage,
   currentRole
 }) => {
@@ -67,11 +70,23 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
       <button
         id="sidebar-post-opportunity-btn"
         onClick={onOpenPostOpportunity}
-        className="mx-3 mb-6 bg-[#5A5A40] hover:bg-[#4A4A33] text-[#F9F9F7] font-semibold text-sm py-3 px-4 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-all duration-150 hover:shadow-md cursor-pointer border border-[#6B6B4D]"
+        className="mx-3 mb-4 bg-[#5A5A40] hover:bg-[#4A4A33] text-[#F9F9F7] font-semibold text-sm py-3 px-4 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-all duration-150 hover:shadow-md cursor-pointer border border-[#6B6B4D]"
       >
         <PlusCircle className="w-4 h-4" />
         <span>{t.postOpportunity || 'Post Opportunity'}</span>
       </button>
+
+      {/* Direct Push to GitHub Button */}
+      {onOpenGitHubPush && (
+        <button
+          id="sidebar-github-push-btn"
+          onClick={onOpenGitHubPush}
+          className="mx-3 mb-6 bg-[#3E3E32] hover:bg-[#4A4A3C] text-[#F9F9F7] font-semibold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-all duration-150 cursor-pointer border border-[#525243]"
+        >
+          <UploadCloud className="w-3.5 h-3.5 text-[#CFE0D1]" />
+          <span>Push to GitHub Repo</span>
+        </button>
+      )}
 
       {/* Navigation Links */}
       <nav className="flex-1 flex flex-col gap-1">

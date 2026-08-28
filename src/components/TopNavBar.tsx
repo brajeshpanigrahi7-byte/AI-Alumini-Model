@@ -10,7 +10,9 @@ import {
   X,
   User,
   LogOut,
-  LifeBuoy
+  LifeBuoy,
+  UploadCloud,
+  GitBranch
 } from 'lucide-react';
 import { UserRole, LanguageCode, NotificationItem } from '../types';
 import { translations } from '../data/initialData';
@@ -28,6 +30,7 @@ interface TopNavBarProps {
   onSearchChange: (q: string) => void;
   onNavigateToTab: (tab: any) => void;
   onOpenLogout?: () => void;
+  onOpenGitHubPush?: () => void;
   userAvatar: string;
 }
 
@@ -44,6 +47,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   onSearchChange,
   onNavigateToTab,
   onOpenLogout,
+  onOpenGitHubPush,
   userAvatar
 }) => {
   const [showNotifications, setShowNotifications] = React.useState(false);
@@ -101,6 +105,19 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
       {/* Action Controls & User Meta */}
       <div className="flex items-center gap-2 md:gap-3">
+        {/* GitHub Direct Push Button */}
+        {onOpenGitHubPush && (
+          <button
+            id="github-push-topbar-btn"
+            onClick={onOpenGitHubPush}
+            title="Direct Push to GitHub Repository"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#2D2D24] hover:bg-[#1E1E18] text-[#F9F9F7] border border-[#3E3E32] transition-colors cursor-pointer shadow-xs"
+          >
+            <UploadCloud className="w-3.5 h-3.5 text-[#CFE0D1]" />
+            <span className="hidden sm:inline">Push to GitHub</span>
+          </button>
+        )}
+
         {/* Offline Simulator Switch */}
         <button
           id="toggle-offline-btn"
@@ -259,53 +276,55 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               src={userAvatar}
               alt="User profile"
               referrerPolicy="no-referrer"
-              className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9] shadow-xs"
+              className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9] ring-1 ring-[#D5D5C6]"
             />
           </div>
 
           {showUserMenu && (
-            <div className="absolute right-0 mt-2 w-56 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2">
-              <div className="px-3 py-2 border-b border-[#E5E2D9]">
-                <p className="text-xs font-bold text-[#2D2D2A]">Brajesh</p>
-                <p className="text-[11px] text-[#7C7B76] truncate font-mono">brajeshpanigrahi7@gmail.com</p>
-              </div>
-
-              <div className="py-1">
+            <div className="absolute right-0 mt-2 w-52 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2">
+              <button
+                onClick={() => {
+                  onNavigateToTab('profile');
+                  setShowUserMenu(false);
+                }}
+                className="w-full text-left px-4 py-2 text-xs text-[#2D2D2A] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                <User className="w-3.5 h-3.5 text-[#5A5A40]" />
+                <span>My Profile &amp; Settings</span>
+              </button>
+              {onOpenGitHubPush && (
                 <button
                   onClick={() => {
-                    onNavigateToTab('profile');
+                    onOpenGitHubPush();
                     setShowUserMenu(false);
                   }}
-                  className="w-full text-left px-3 py-2 text-xs flex items-center gap-2.5 text-[#5F5E59] hover:text-[#2D2D2A] hover:bg-[#EBE8E1] transition-colors cursor-pointer"
+                  className="w-full text-left px-4 py-2 text-xs text-[#2D2D2A] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer font-bold"
                 >
-                  <User className="w-4 h-4 text-[#5A5A40]" />
-                  <span>My Digital Profile</span>
+                  <UploadCloud className="w-3.5 h-3.5 text-[#34583A]" />
+                  <span>Push to GitHub Repo</span>
                 </button>
-
-                <button
-                  onClick={() => {
-                    onNavigateToTab('help_center');
-                    setShowUserMenu(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-xs flex items-center gap-2.5 text-[#5F5E59] hover:text-[#2D2D2A] hover:bg-[#EBE8E1] transition-colors cursor-pointer"
-                >
-                  <LifeBuoy className="w-4 h-4 text-[#5A5A40]" />
-                  <span>Help Center & Support</span>
-                </button>
-              </div>
-
-              <div className="border-t border-[#E5E2D9] pt-1">
-                <button
-                  onClick={() => {
-                    setShowUserMenu(false);
-                    if (onOpenLogout) onOpenLogout();
-                  }}
-                  className="w-full text-left px-3 py-2 text-xs flex items-center gap-2.5 text-[#8C5E3C] hover:bg-[#F4ECE4] transition-colors cursor-pointer font-semibold"
-                >
-                  <LogOut className="w-4 h-4 text-[#8C5E3C]" />
-                  <span>Logout & Session</span>
-                </button>
-              </div>
+              )}
+              <button
+                onClick={() => {
+                  onNavigateToTab('help');
+                  setShowUserMenu(false);
+                }}
+                className="w-full text-left px-4 py-2 text-xs text-[#2D2D2A] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                <LifeBuoy className="w-3.5 h-3.5 text-[#5A5A40]" />
+                <span>Help &amp; Documentation</span>
+              </button>
+              <div className="border-t border-[#E5E2D9] my-1" />
+              <button
+                onClick={() => {
+                  setShowUserMenu(false);
+                  if (onOpenLogout) onOpenLogout();
+                }}
+                className="w-full text-left px-4 py-2 text-xs text-[#8C5E3C] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer font-medium"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out / Switch</span>
+              </button>
             </div>
           )}
         </div>
