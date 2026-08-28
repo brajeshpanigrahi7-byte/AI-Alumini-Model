@@ -1,0 +1,7 @@
+{
+  "name": "SkillBridge Nexus",
+  "description": "A unified Academia–Industry Collaboration Portal connecting students, industries, and academicians for skill assessment, industry mapping, internships, placements, and verified digital credentials.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
