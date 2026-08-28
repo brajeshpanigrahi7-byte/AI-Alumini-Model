@@ -42,6 +42,19 @@ import { AddMilestoneModal } from './components/Modals/AddMilestoneModal';
 import { LogoutModal } from './components/Modals/LogoutModal';
 import { mockAvailableAccounts } from './data/initialData';
 
+// Safely reads and parses a value from localStorage.
+// If the key doesn't exist, or the saved data is corrupted/invalid JSON,
+// this returns the provided fallback instead of crashing the app.
+function loadFromStorage<T>(key: string, fallback: T): T {
+  try {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : fallback;
+  } catch (error) {
+    console.error(`Failed to load "${key}" from localStorage. Using default data instead.`, error);
+    return fallback;
+  }
+}
+
 export default function App() {
   // Local persistence states
   const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
@@ -51,45 +64,37 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Domain data
-  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
-    const saved = localStorage.getItem('nexus_user_profile');
-    return saved ? JSON.parse(saved) : initialUserProfile;
-  });
+  const [userProfile, setUserProfile] = useState<UserProfile>(() =>
+    loadFromStorage('nexus_user_profile', initialUserProfile)
+  );
 
-  const [assessments, setAssessments] = useState(() => {
-    const saved = localStorage.getItem('nexus_assessments');
-    return saved ? JSON.parse(saved) : initialAssessments;
-  });
+  const [assessments, setAssessments] = useState(() =>
+    loadFromStorage('nexus_assessments', initialAssessments)
+  );
 
-  const [opportunities, setOpportunities] = useState(() => {
-    const saved = localStorage.getItem('nexus_opportunities');
-    return saved ? JSON.parse(saved) : initialOpportunities;
-  });
+  const [opportunities, setOpportunities] = useState(() =>
+    loadFromStorage('nexus_opportunities', initialOpportunities)
+  );
 
-  const [learningPrograms, setLearningPrograms] = useState(() => {
-    const saved = localStorage.getItem('nexus_learning');
-    return saved ? JSON.parse(saved) : initialLearningPrograms;
-  });
+  const [learningPrograms, setLearningPrograms] = useState(() =>
+    loadFromStorage('nexus_learning', initialLearningPrograms)
+  );
 
-  const [mentorships, setMentorships] = useState(() => {
-    const saved = localStorage.getItem('nexus_mentorships');
-    return saved ? JSON.parse(saved) : initialMentorships;
-  });
+  const [mentorships, setMentorships] = useState(() =>
+    loadFromStorage('nexus_mentorships', initialMentorships)
+  );
 
-  const [applications, setApplications] = useState(() => {
-    const saved = localStorage.getItem('nexus_applications');
-    return saved ? JSON.parse(saved) : initialApplications;
-  });
+  const [applications, setApplications] = useState(() =>
+    loadFromStorage('nexus_applications', initialApplications)
+  );
 
-  const [documents, setDocuments] = useState(() => {
-    const saved = localStorage.getItem('nexus_documents');
-    return saved ? JSON.parse(saved) : initialDocuments;
-  });
+  const [documents, setDocuments] = useState(() =>
+    loadFromStorage('nexus_documents', initialDocuments)
+  );
 
-  const [notifications, setNotifications] = useState<NotificationItem[]>(() => {
-    const saved = localStorage.getItem('nexus_notifications');
-    return saved ? JSON.parse(saved) : initialNotifications;
-  });
+  const [notifications, setNotifications] = useState<NotificationItem[]>(() =>
+    loadFromStorage('nexus_notifications', initialNotifications)
+  );
 
   // Modals state
   const [isPostOpportunityOpen, setIsPostOpportunityOpen] = useState(false);
