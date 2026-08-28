@@ -165,6 +165,7 @@ export const LearningProgramsView: React.FC<LearningProgramsViewProps> = ({
                   <img
                     src={mentor.avatar}
                     alt={mentor.mentorName}
+                    referrerPolicy="no-referrer"
                     className="w-12 h-12 rounded-full object-cover border-2 border-[#E5E2D9] shadow-xs"
                   />
                   <div>

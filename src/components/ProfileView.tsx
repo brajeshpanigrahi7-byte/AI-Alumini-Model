@@ -18,7 +18,11 @@ import {
   BookOpen,
   Code,
   Sparkles,
-  FileCheck
+  FileCheck,
+  Upload,
+  Image as ImageIcon,
+  Camera,
+  X
 } from 'lucide-react';
 import { UserProfile, Milestone } from '../types';
 
@@ -29,6 +33,7 @@ interface ProfileViewProps {
   onOpenAddMilestone: () => void;
   onCompleteCertificationTask: () => void;
   onUpdateBio: (newBio: string) => void;
+  onUpdateAvatar?: (newAvatar: string) => void;
 }
 
 export const ProfileView: React.FC<ProfileViewProps> = ({
@@ -37,12 +42,39 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   onOpenResumeModal,
   onOpenAddMilestone,
   onCompleteCertificationTask,
-  onUpdateBio
+  onUpdateBio,
+  onUpdateAvatar
 }) => {
   const [activeTab, setActiveTab] = useState<'personal' | 'academic' | 'security'>('personal');
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [bioText, setBioText] = useState(profile.bio);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [avatarUrlInput, setAvatarUrlInput] = useState('');
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        if (result && onUpdateAvatar) {
+          onUpdateAvatar(result);
+          setShowAvatarModal(false);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleApplyAvatarUrl = () => {
+    if (avatarUrlInput.trim() && onUpdateAvatar) {
+      onUpdateAvatar(avatarUrlInput.trim());
+      setShowAvatarModal(false);
+      setAvatarUrlInput('');
+    }
+  };
 
   const handleShare = () => {
     navigator.clipboard?.writeText(window.location.href);
@@ -91,13 +123,21 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             id="profile-main-avatar"
             src={profile.avatar}
             alt="User Avatar"
+            referrerPolicy="no-referrer"
             className="w-28 h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-[#F9F9F7] shadow-sm ring-1 ring-[#E5E2D9]"
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            accept="image/*"
+            className="hidden"
           />
           <button
             id="edit-avatar-btn"
-            onClick={() => alert("Avatar upload dialog: Select a new verified institutional headshot.")}
+            onClick={() => setShowAvatarModal(true)}
             className="absolute bottom-0 right-0 bg-[#5A5A40] text-[#F9F9F7] p-2 rounded-full shadow-md hover:scale-105 transition-transform flex items-center justify-center hover:bg-[#4A4A33] cursor-pointer"
-            title="Edit photo"
+            title="Edit profile photo"
           >
             <Pencil className="w-3.5 h-3.5" />
           </button>
@@ -478,6 +518,80 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               <div className="text-[11px] font-mono bg-[#F9F9F7] p-2.5 rounded border border-[#E5E2D9] text-[#5F5E59] truncate">
                 Public Fingerprint: 4F:2E:88:91:AA:B0:12:99:6D:FE:33:10
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Avatar Change / Upload Modal */}
+      {showAvatarModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#F9F9F7] rounded-2xl max-w-md w-full p-6 shadow-2xl border border-[#E5E2D9] animate-in zoom-in-95 space-y-5">
+            <div className="flex items-center justify-between border-b border-[#E5E2D9] pb-3">
+              <div className="flex items-center gap-2">
+                <Camera className="w-5 h-5 text-[#5A5A40]" />
+                <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display">Update Profile Picture</h3>
+              </div>
+              <button
+                onClick={() => setShowAvatarModal(false)}
+                className="p-1 rounded-lg text-[#7C7B76] hover:text-[#2D2D2A] hover:bg-[#E8E8DF] cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Current Avatar Preview */}
+            <div className="flex flex-col items-center justify-center py-2 space-y-2">
+              <img
+                src={profile.avatar}
+                alt="Current profile preview"
+                referrerPolicy="no-referrer"
+                className="w-24 h-24 rounded-full object-cover border-4 border-[#E8E8DF] shadow-sm"
+              />
+              <p className="text-xs text-[#5F5E59] font-medium">{profile.name}</p>
+            </div>
+
+            {/* Upload Options */}
+            <div className="space-y-3">
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full py-3 px-4 bg-[#5A5A40] hover:bg-[#4A4A33] text-[#F9F9F7] text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Upload className="w-4 h-4" />
+                <span>Upload Photo from Device (PNG / JPG)</span>
+              </button>
+
+              <div className="relative flex py-1 items-center">
+                <div className="flex-grow border-t border-[#E5E2D9]"></div>
+                <span className="flex-shrink mx-3 text-[11px] text-[#7C7B76] uppercase font-bold">Or enter image URL</span>
+                <div className="flex-grow border-t border-[#E5E2D9]"></div>
+              </div>
+
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  placeholder="https://example.com/avatar.jpg"
+                  value={avatarUrlInput}
+                  onChange={(e) => setAvatarUrlInput(e.target.value)}
+                  className="flex-1 p-2 bg-[#F2F1ED] border border-[#E5E2D9] rounded-lg text-xs text-[#2D2D2A] focus:ring-2 focus:ring-[#5A5A40] focus:outline-none"
+                />
+                <button
+                  onClick={handleApplyAvatarUrl}
+                  disabled={!avatarUrlInput.trim()}
+                  className="px-3 py-2 bg-[#E8E8DF] hover:bg-[#D5D5C6] disabled:opacity-50 text-xs font-bold text-[#2D2D2A] rounded-lg border border-[#D5D5C6] cursor-pointer transition-colors"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-[#E5E2D9] flex justify-end">
+              <button
+                onClick={() => setShowAvatarModal(false)}
+                className="px-4 py-2 text-xs font-semibold text-[#7C7B76] hover:bg-[#E8E8DF] rounded-lg cursor-pointer transition-colors"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>

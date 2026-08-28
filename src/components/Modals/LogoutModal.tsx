@@ -97,6 +97,7 @@ export const LogoutModal: React.FC<LogoutModalProps> = ({
               <img
                 src={userProfile.avatar}
                 alt={userProfile.name}
+                referrerPolicy="no-referrer"
                 className="w-12 h-12 rounded-full object-cover border border-[#E5E2D9]"
               />
               <div className="flex-1 min-w-0">
@@ -203,6 +204,7 @@ export const LogoutModal: React.FC<LogoutModalProps> = ({
                       <img
                         src={acc.avatar}
                         alt={acc.name}
+                        referrerPolicy="no-referrer"
                         className="w-10 h-10 rounded-full object-cover border border-[#E5E2D9]"
                       />
                       <div className="min-w-0">

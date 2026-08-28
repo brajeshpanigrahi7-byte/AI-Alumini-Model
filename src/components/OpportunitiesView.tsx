@@ -210,6 +210,7 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({
                         <img
                           src={opp.companyLogo}
                           alt={opp.company}
+                          referrerPolicy="no-referrer"
                           className="w-12 h-12 rounded-xl object-cover border border-[#E5E2D9]"
                         />
                         <div>
@@ -369,6 +370,7 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({
                 <img
                   src={selectedOpportunity.companyLogo}
                   alt={selectedOpportunity.company}
+                  referrerPolicy="no-referrer"
                   className="w-12 h-12 rounded-xl object-cover border border-[#E5E2D9]"
                 />
                 <div>

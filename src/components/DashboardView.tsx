@@ -150,6 +150,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   <img
                     src={opp.companyLogo}
                     alt={opp.company}
+                    referrerPolicy="no-referrer"
                     className="w-10 h-10 rounded-lg object-cover border border-[#E5E2D9]"
                   />
                   <div>

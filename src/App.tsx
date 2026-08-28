@@ -173,6 +173,23 @@ export default function App() {
     }));
   };
 
+  const handleUpdateAvatar = (newAvatar: string) => {
+    setUserProfile(prev => ({
+      ...prev,
+      avatar: newAvatar
+    }));
+    const newNotif: NotificationItem = {
+      id: `notif_${Date.now()}`,
+      title: 'Profile Picture Updated',
+      message: 'Your official verified headshot has been updated and synchronized with your Skill Passport.',
+      timestamp: 'Just now',
+      read: false,
+      type: 'system',
+      linkTab: 'profile'
+    };
+    setNotifications(prev => [newNotif, ...prev]);
+  };
+
   const handleEndorseSkill = (skillId: string) => {
     setUserProfile(prev => ({
       ...prev,
@@ -315,7 +332,7 @@ export default function App() {
                 className="w-full p-3 rounded-xl border border-[#E5E2D9] bg-[#F2F1ED]/60 hover:bg-[#E8E8DF] flex items-center justify-between text-left transition-all cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <img src={acc.avatar} alt={acc.name} className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9]" />
+                  <img src={acc.avatar} alt={acc.name} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9]" />
                   <div>
                     <p className="font-bold text-xs text-[#2D2D2A]">{acc.name}</p>
                     <p className="text-[10px] text-[#7C7B76] capitalize">{acc.role.replace('_', ' ')} • {acc.institution.split(' ')[0]}</p>
@@ -389,6 +406,7 @@ export default function App() {
             onOpenAddMilestone={() => setIsAddMilestoneOpen(true)}
             onCompleteCertificationTask={handleCompleteCertificationTask}
             onUpdateBio={handleUpdateBio}
+            onUpdateAvatar={handleUpdateAvatar}
           />
         )}
 

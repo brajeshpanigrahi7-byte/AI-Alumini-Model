@@ -258,6 +258,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               id="top-nav-avatar"
               src={userAvatar}
               alt="User profile"
+              referrerPolicy="no-referrer"
               className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9] shadow-xs"
             />
           </div>

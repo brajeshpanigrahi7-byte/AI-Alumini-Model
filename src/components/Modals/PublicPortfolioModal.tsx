@@ -59,6 +59,7 @@ export const PublicPortfolioModal: React.FC<PublicPortfolioModalProps> = ({
             <img
               src={profile.avatar}
               alt={profile.name}
+              referrerPolicy="no-referrer"
               className="w-20 h-20 rounded-full object-cover border-2 border-[#F9F9F7] shadow-md"
             />
             <div className="flex-1">

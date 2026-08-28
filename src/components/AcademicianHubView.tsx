@@ -123,6 +123,7 @@ export const AcademicianHubView: React.FC<AcademicianHubViewProps> = ({
                     <img
                       src={opp.companyLogo}
                       alt={opp.company}
+                      referrerPolicy="no-referrer"
                       className="w-12 h-12 rounded-xl object-cover border border-[#E5E2D9]"
                     />
                     <div>
