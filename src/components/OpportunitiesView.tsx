@@ -253,7 +253,7 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {opp.requiredSkills.map((skill) => {
-                          const candidateHasSkill = userProfile.skills.some(
+                          const candidateHasSkill = (userProfile?.skills || []).some(
                             s => s.name.toLowerCase().includes(skill.toLowerCase()) || skill.toLowerCase().includes(s.name.toLowerCase())
                           );
                           return (

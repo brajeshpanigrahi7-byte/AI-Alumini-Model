@@ -499,7 +499,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 Top Competencies
               </h3>
               <div className="space-y-3">
-                {profile.skills.slice(0, 5).map(skill => (
+                {(profile.skills || []).slice(0, 5).map(skill => (
                   <div key={skill.id} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-bold text-[#2D2D2A]">{skill.name}</span>

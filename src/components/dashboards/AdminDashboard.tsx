@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Building2, 
   Award, 
@@ -15,7 +15,9 @@ import {
   ArrowUpRight,
   Handshake,
   BarChart3,
-  Sparkles
+  Sparkles,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { UserProfile, Opportunity, ActiveTab } from '../../types';
 
@@ -30,6 +32,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   opportunities,
   onNavigate
 }) => {
+  const [isScorecardOpen, setIsScorecardOpen] = useState<boolean>(false);
+  const [isMoUsOpen, setIsMoUsOpen] = useState<boolean>(false);
+  const [isKeyOpen, setIsKeyOpen] = useState<boolean>(false);
+
   const departments = [
     { name: 'Computer Science & AI', placementRate: 98.4, students: 1250, avgCTC: '$118,000', alignment: 96 },
     { name: 'Data Science & Applied Statistics', placementRate: 95.2, students: 840, avgCTC: '$104,000', alignment: 94 },
@@ -57,7 +63,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <span className="bg-[#8C5E3C] text-[#F4ECE4] px-2 py-0.5 rounded text-[10px] font-bold">Consortium Dean Authority</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-bold tracking-tight font-serif-display">
-              Institutional Governance & Accreditation — {profile.name}
+              Institutional Governance &amp; Accreditation — {profile.name}
             </h1>
             <p className="text-sm text-[#C5C4BA] mt-1.5 max-w-2xl leading-relaxed">
               Consortium accreditation status: <strong>NAAC A++ (Score: 3.78/4.00)</strong> • NIRF Engineering Rank #4. Managing <strong>4,850 enrolled scholars</strong> across 8 accredited departments.
@@ -122,134 +128,216 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
       </div>
 
-      {/* Department-wise Placement & Skill Gap Table */}
-      <div className="bg-[#F9F9F7] rounded-2xl border border-[#E5E2D9] p-6 shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E5E2D9] pb-4">
-          <div>
-            <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display flex items-center gap-2">
-              <GraduationCap className="w-5 h-5 text-[#5A5A40]" />
-              <span>Departmental Placement & Industry Alignment Scorecard</span>
-            </h3>
-            <p className="text-xs text-[#7C7B76] mt-0.5">Accreditation metric submitted for ABET & NAAC Annual Quality Audits.</p>
-          </div>
-          <button 
-            onClick={() => onNavigate('analytics')}
-            className="text-xs font-bold text-[#5A5A40] hover:underline"
-          >
-            Full Analytics &rarr;
-          </button>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#2D2D2A]">
-            <thead>
-              <tr className="border-b border-[#E5E2D9] text-[#7C7B76] uppercase tracking-wider font-semibold">
-                <th className="py-2.5 px-3">Department</th>
-                <th className="py-2.5 px-3">Enrolled Scholars</th>
-                <th className="py-2.5 px-3">Placement Rate</th>
-                <th className="py-2.5 px-3">Median CTC</th>
-                <th className="py-2.5 px-3">Industry Alignment</th>
-                <th className="py-2.5 px-3">Accreditation</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#E5E2D9]">
-              {departments.map((dept) => (
-                <tr key={dept.name} className="hover:bg-[#F2F1ED] transition-colors">
-                  <td className="py-3 px-3 font-bold text-[#2D2D2A]">{dept.name}</td>
-                  <td className="py-3 px-3 text-[#5F5E59]">{dept.students} Scholars</td>
-                  <td className="py-3 px-3">
-                    <span className="inline-flex items-center gap-1 font-bold text-[#34583A]">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      {dept.placementRate}%
-                    </span>
-                  </td>
-                  <td className="py-3 px-3 font-semibold text-[#2D2D2A]">{dept.avgCTC}</td>
-                  <td className="py-3 px-3">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-[#5A5A40]">{dept.alignment}%</span>
-                      <div className="w-20 bg-[#E5E2D9] h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-[#5A5A40] h-full rounded-full" style={{ width: `${dept.alignment}%` }} />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-3 px-3">
-                    <span className="bg-[#EAF1EB] text-[#34583A] text-[10px] font-bold px-2 py-0.5 rounded border border-[#CFE0D1]">
-                      NAAC A++
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Corporate MoUs & Cryptographic Verification Authority */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-[#F9F9F7] rounded-2xl border border-[#E5E2D9] p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[#E5E2D9] pb-3">
-            <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display flex items-center gap-2">
-              <Handshake className="w-4 h-4 text-[#8C5E3C]" />
-              <span>Active Corporate MoUs & Industry Alliances</span>
-            </h3>
-            <span className="text-xs font-bold text-[#34583A] bg-[#EAF1EB] px-2 py-0.5 rounded">42 Total</span>
-          </div>
-
-          <div className="space-y-3">
-            {corporateMoUs.map((mou) => (
-              <div key={mou.company} className="p-3.5 rounded-xl bg-[#F2F1ED]/80 border border-[#E5E2D9] flex items-center justify-between">
-                <div className="min-w-0 pr-3">
-                  <h4 className="font-bold text-xs text-[#2D2D2A] truncate">{mou.company}</h4>
-                  <p className="text-[11px] text-[#7C7B76]">{mou.type} • Partner Since {mou.since}</p>
-                  <p className="text-[10px] font-semibold text-[#34583A] mt-0.5">{mou.activeHires} Placements • {mou.funding}</p>
-                </div>
-                <span className="px-2 py-1 bg-[#EAF1EB] text-[#34583A] text-[10px] font-bold rounded border border-[#CFE0D1]">
-                  Active MoU
+      {/* Department-wise Placement & Skill Gap Table (Collapsible Dropdown) */}
+      <div className="bg-[#F9F9F7] rounded-2xl border border-[#E5E2D9] p-6 shadow-xs space-y-4 transition-all">
+        <div 
+          onClick={() => setIsScorecardOpen(!isScorecardOpen)}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer group select-none"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-[#5A5A40] text-[#F9F9F7] flex items-center justify-center flex-shrink-0 shadow-xs">
+              <GraduationCap className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display group-hover:text-[#5A5A40] transition-colors">
+                  Departmental Placement &amp; Industry Alignment Scorecard
+                </h3>
+                <span className="bg-[#EAF1EB] text-[#34583A] border border-[#CFE0D1] text-[10px] font-bold px-2.5 py-0.5 rounded-full">
+                  {departments.length} Accredited Depts
                 </span>
               </div>
-            ))}
+              <p className="text-xs text-[#7C7B76] mt-0.5">Accreditation metric submitted for ABET &amp; NAAC Annual Quality Audits.</p>
+            </div>
           </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsScorecardOpen(!isScorecardOpen);
+              }}
+              className="px-3.5 py-2 bg-[#E8E8DF] hover:bg-[#D5D5C6] text-[#2D2D2A] text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>{isScorecardOpen ? 'Hide Scorecard' : 'Show Scorecard'}</span>
+              {isScorecardOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+        </div>
+
+        {isScorecardOpen && (
+          <div className="mt-4 pt-4 border-t border-[#E5E2D9] space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="flex justify-end">
+              <button 
+                onClick={() => onNavigate('analytics')}
+                className="text-xs font-bold text-[#5A5A40] hover:underline"
+              >
+                Full Analytics &rarr;
+              </button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-[#2D2D2A]">
+                <thead>
+                  <tr className="border-b border-[#E5E2D9] text-[#7C7B76] uppercase tracking-wider font-semibold">
+                    <th className="py-2.5 px-3">Department</th>
+                    <th className="py-2.5 px-3">Enrolled Scholars</th>
+                    <th className="py-2.5 px-3">Placement Rate</th>
+                    <th className="py-2.5 px-3">Median CTC</th>
+                    <th className="py-2.5 px-3">Industry Alignment</th>
+                    <th className="py-2.5 px-3">Accreditation</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#E5E2D9]">
+                  {departments.map((dept) => (
+                    <tr key={dept.name} className="hover:bg-[#F2F1ED] transition-colors">
+                      <td className="py-3 px-3 font-bold text-[#2D2D2A]">{dept.name}</td>
+                      <td className="py-3 px-3 text-[#5F5E59]">{dept.students} Scholars</td>
+                      <td className="py-3 px-3">
+                        <span className="inline-flex items-center gap-1 font-bold text-[#34583A]">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          {dept.placementRate}%
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 font-semibold text-[#2D2D2A]">{dept.avgCTC}</td>
+                      <td className="py-3 px-3">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-[#5A5A40]">{dept.alignment}%</span>
+                          <div className="w-20 bg-[#E5E2D9] h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-[#5A5A40] h-full rounded-full" style={{ width: `${dept.alignment}%` }} />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-3">
+                        <span className="bg-[#EAF1EB] text-[#34583A] text-[10px] font-bold px-2 py-0.5 rounded border border-[#CFE0D1]">
+                          NAAC A++
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Corporate MoUs & Cryptographic Verification Authority (Collapsible Dropdowns) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Active Corporate MoUs & Industry Alliances */}
+        <div className="bg-[#F9F9F7] rounded-2xl border border-[#E5E2D9] p-6 shadow-xs space-y-4 transition-all">
+          <div 
+            onClick={() => setIsMoUsOpen(!isMoUsOpen)}
+            className="flex items-center justify-between cursor-pointer group select-none"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#8C5E3C] text-[#F9F9F7] flex items-center justify-center">
+                <Handshake className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display group-hover:text-[#8C5E3C] transition-colors flex items-center gap-2">
+                  <span>Active Corporate MoUs &amp; Industry Alliances</span>
+                </h3>
+                <span className="text-xs font-bold text-[#34583A] bg-[#EAF1EB] px-2 py-0.5 rounded">42 Total Active MoUs</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMoUsOpen(!isMoUsOpen);
+              }}
+              className="px-3 py-1.5 bg-[#E8E8DF] hover:bg-[#D5D5C6] text-[#2D2D2A] text-xs font-bold rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              <span>{isMoUsOpen ? 'Hide' : 'Show MoUs'}</span>
+              {isMoUsOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {isMoUsOpen && (
+            <div className="mt-3 pt-3 border-t border-[#E5E2D9] space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+              {corporateMoUs.map((mou) => (
+                <div key={mou.company} className="p-3.5 rounded-xl bg-[#F2F1ED]/80 border border-[#E5E2D9] flex items-center justify-between">
+                  <div className="min-w-0 pr-3">
+                    <h4 className="font-bold text-xs text-[#2D2D2A] truncate">{mou.company}</h4>
+                    <p className="text-[11px] text-[#7C7B76]">{mou.type} • Partner Since {mou.since}</p>
+                    <p className="text-[10px] font-semibold text-[#34583A] mt-0.5">{mou.activeHires} Placements • {mou.funding}</p>
+                  </div>
+                  <span className="px-2 py-1 bg-[#EAF1EB] text-[#34583A] text-[10px] font-bold rounded border border-[#CFE0D1]">
+                    Active MoU
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Blockchain Root Authority & Compliance Audit */}
-        <div className="bg-[#F9F9F7] rounded-2xl border border-[#E5E2D9] p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[#E5E2D9] pb-3">
-            <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display flex items-center gap-2">
-              <Key className="w-4 h-4 text-[#5A5A40]" />
-              <span>Consortium Root Cryptographic Signing Key</span>
-            </h3>
-            <span className="text-xs font-bold text-[#34583A] bg-[#EAF1EB] px-2 py-0.5 rounded flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Verified Root
-            </span>
-          </div>
+        <div className="bg-[#F9F9F7] rounded-2xl border border-[#E5E2D9] p-6 shadow-xs space-y-4 transition-all">
+          <div 
+            onClick={() => setIsKeyOpen(!isKeyOpen)}
+            className="flex items-center justify-between cursor-pointer group select-none"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#5A5A40] text-[#F9F9F7] flex items-center justify-center">
+                <Key className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#2D2D2A] font-serif-display group-hover:text-[#5A5A40] transition-colors flex items-center gap-2">
+                  <span>Consortium Root Cryptographic Signing Key</span>
+                </h3>
+                <span className="text-xs font-bold text-[#34583A] bg-[#EAF1EB] px-2 py-0.5 rounded flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  Verified Root
+                </span>
+              </div>
+            </div>
 
-          <div className="p-4 rounded-xl bg-[#2D2D24] text-[#F9F9F7] border border-[#3E3E32] space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-[#A3A380] font-mono">Consortium Root Public Key:</span>
-              <span className="text-[#CFE0D1] font-bold text-[10px]">ECDSA-Secp256k1</span>
-            </div>
-            <p className="font-mono text-xs text-[#D4D4B8] break-all bg-[#1E1E18] p-2.5 rounded-lg border border-[#3E3E32]">
-              0x99a120fc64bca883109e22aa7f8a92ec41b80211
-            </p>
-            <div className="flex items-center justify-between text-[11px] text-[#A9A89C]">
-              <span>Issued by: Elena Rostova, Dean & Registrar</span>
-              <span>Audit: 0 Tampered Documents</span>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-xl bg-[#EAF1EB] border border-[#CFE0D1] flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#34583A]">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Annual Accreditation Audit Report (2026 Ready)</span>
-            </div>
-            <button 
-              onClick={() => onNavigate('documents')}
-              className="text-xs font-bold text-[#34583A] underline cursor-pointer"
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsKeyOpen(!isKeyOpen);
+              }}
+              className="px-3 py-1.5 bg-[#E8E8DF] hover:bg-[#D5D5C6] text-[#2D2D2A] text-xs font-bold rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
             >
-              Export Report
+              <span>{isKeyOpen ? 'Hide' : 'Show Key'}</span>
+              {isKeyOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
           </div>
+
+          {isKeyOpen && (
+            <div className="mt-3 pt-3 border-t border-[#E5E2D9] space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="p-4 rounded-xl bg-[#2D2D24] text-[#F9F9F7] border border-[#3E3E32] space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-[#A3A380] font-mono">Consortium Root Public Key:</span>
+                  <span className="text-[#CFE0D1] font-bold text-[10px]">ECDSA-Secp256k1</span>
+                </div>
+                <p className="font-mono text-xs text-[#D4D4B8] break-all bg-[#1E1E18] p-2.5 rounded-lg border border-[#3E3E32]">
+                  0x99a120fc64bca883109e22aa7f8a92ec41b80211
+                </p>
+                <div className="flex items-center justify-between text-[11px] text-[#A9A89C]">
+                  <span>Issued by: Elena Rostova, Dean &amp; Registrar</span>
+                  <span>Audit: 0 Tampered Documents</span>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#EAF1EB] border border-[#CFE0D1] flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#34583A]">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Annual Accreditation Audit Report (2026 Ready)</span>
+                </div>
+                <button 
+                  onClick={() => onNavigate('documents')}
+                  className="text-xs font-bold text-[#34583A] underline cursor-pointer"
+                >
+                  Export Report
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

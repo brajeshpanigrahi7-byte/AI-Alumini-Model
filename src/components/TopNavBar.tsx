@@ -10,9 +10,7 @@ import {
   X,
   User,
   LogOut,
-  LifeBuoy,
-  UploadCloud,
-  GitBranch
+  LifeBuoy
 } from 'lucide-react';
 import { UserRole, LanguageCode, NotificationItem } from '../types';
 import { translations } from '../data/initialData';
@@ -30,7 +28,7 @@ interface TopNavBarProps {
   onSearchChange: (q: string) => void;
   onNavigateToTab: (tab: any) => void;
   onOpenLogout?: () => void;
-  onOpenGitHubPush?: () => void;
+  onOpenJudgeShowcase?: () => void;
   userAvatar: string;
 }
 
@@ -47,13 +45,15 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   onSearchChange,
   onNavigateToTab,
   onOpenLogout,
-  onOpenGitHubPush,
+  onOpenJudgeShowcase,
   userAvatar
 }) => {
   const [showNotifications, setShowNotifications] = React.useState(false);
   const [showLangMenu, setShowLangMenu] = React.useState(false);
   const [showRoleMenu, setShowRoleMenu] = React.useState(false);
   const [showUserMenu, setShowUserMenu] = React.useState(false);
+  const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+  const searchContainerRef = React.useRef<HTMLDivElement>(null);
 
   const t = translations[currentLanguage] || translations.en;
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -65,56 +65,134 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     institution_admin: { label: t.roleAdmin || 'Institution Admin', badgeColor: 'bg-[#F4ECE4] text-[#8C5E3C] border border-[#E6D4C3]' }
   };
 
+  // Quick suggestions for global search
+  const quickSearchItems = [
+    { title: 'Machine Learning & Python Assessments', category: 'Assessments', tab: 'assessments', role: 'student' },
+    { title: 'Siemens Enterprise AI Internship', category: 'Opportunities', tab: 'opportunities', role: 'student' },
+    { title: 'Digital Skill Passport Verification', category: 'Passport', tab: 'skill_passport', role: 'student' },
+    { title: 'Faculty Development Program (FDP)', category: 'Faculty', tab: 'academician_hub', role: 'academician' },
+    { title: 'Institution NAAC & ABET Governance', category: 'Accreditation', tab: 'analytics', role: 'institution_admin' },
+    { title: 'Document Vault & Degree Certificates', category: 'Documents', tab: 'documents', role: 'student' },
+    { title: 'Industry Collaboration MoUs', category: 'Industry', tab: 'collaboration', role: 'recruiter' }
+  ];
+
+  const matchingSuggestions = searchQuery.trim()
+    ? quickSearchItems.filter(item => 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        item.category.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-4 md:px-8 h-16 bg-[#F9F9F7] border-b border-[#E5E2D9] shadow-xs">
-      {/* Brand on Desktop & Mobile */}
-      <div className="flex items-center gap-3">
+    <nav className="fixed top-0 left-0 md:left-[280px] w-full md:w-[calc(100%-280px)] z-40 flex justify-between items-center px-4 md:px-6 h-16 bg-[#F9F9F7] border-b border-[#E5E2D9] shadow-xs">
+      {/* Brand / Context Indicator on Mobile and Desktop */}
+      <div className="flex items-center gap-2 shrink-0">
+        {/* Mobile Brand Logo */}
         <div className="md:hidden flex items-center gap-2 cursor-pointer" onClick={() => onNavigateToTab('profile')}>
           <div className="w-8 h-8 rounded-lg bg-[#5A5A40] flex items-center justify-center text-[#F9F9F7] font-bold text-sm">
             SN
           </div>
-          <span className="font-bold text-lg text-[#2D2D2A] tracking-tight font-serif-display">SkillBridge</span>
+          <span className="font-bold text-base text-[#2D2D2A] tracking-tight font-serif-display">SkillBridge</span>
         </div>
-        <span className="hidden md:inline-block font-bold text-xl text-[#2D2D2A] tracking-tight font-serif-display">
-          {t.portalName}
-        </span>
+
+        {/* Desktop Portal Context Chip */}
+        <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#EBE8E1]/70 border border-[#E5E2D9] text-[11px] font-medium text-[#5F5E59]">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span className="truncate max-w-[140px] xl:max-w-[200px]">Live Skill Passport Ledger</span>
+        </div>
       </div>
 
-      {/* Global Search Bar */}
-      <div className="flex flex-1 justify-center max-w-lg mx-2 md:mx-6">
+      {/* Global Search Bar - Properly centered with ample room */}
+      <div ref={searchContainerRef} className="flex flex-1 justify-center max-w-lg lg:max-w-xl mx-2 md:mx-4 relative">
         <div className="relative w-full">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7B76]" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7B76] pointer-events-none" />
           <input
             id="global-search-input"
             type="text"
             value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder={t.searchPlaceholder || "Search skills, opportunities, FDPs, learning..."}
-            className="w-full pl-9 pr-4 py-2 bg-[#EBE8E1]/80 border border-[#E5E2D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5A5A40] text-sm text-[#2D2D2A] placeholder-[#7C7B76] transition-all"
+            onFocus={() => setIsSearchFocused(true)}
+            onChange={(e) => {
+              onSearchChange(e.target.value);
+              setIsSearchFocused(true);
+            }}
+            placeholder={t.searchPlaceholder || "Search skills, assessments, jobs, credentials..."}
+            className="w-full pl-9 pr-8 py-2 bg-[#EBE8E1]/80 hover:bg-[#EBE8E1] focus:bg-[#FFFFFF] border border-[#E5E2D9] focus:border-[#5A5A40] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A5A40]/20 text-xs sm:text-sm text-[#2D2D2A] placeholder-[#7C7B76] transition-all shadow-2xs"
           />
           {searchQuery && (
             <button 
-              onClick={() => onSearchChange('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7C7B76] hover:text-[#2D2D2A]"
+              onClick={() => {
+                onSearchChange('');
+                setIsSearchFocused(false);
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7C7B76] hover:text-[#2D2D2A] p-0.5 rounded-full hover:bg-[#E5E2D9] transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
+
+        {/* Interactive Search Autocomplete / Quick Navigation Dropdown */}
+        {isSearchFocused && searchQuery.trim().length > 0 && (
+          <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-1 overflow-hidden">
+            <div className="px-3 py-1.5 text-[10px] font-bold text-[#7C7B76] uppercase tracking-wider border-b border-[#E5E2D9] flex justify-between items-center">
+              <span>Quick Navigation &amp; Results</span>
+              <span>{matchingSuggestions.length} found</span>
+            </div>
+
+            {matchingSuggestions.length > 0 ? (
+              <div className="max-h-64 overflow-y-auto divide-y divide-[#E5E2D9]/60">
+                {matchingSuggestions.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      onNavigateToTab(item.tab);
+                      setIsSearchFocused(false);
+                    }}
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-[#EBE8E1] transition-colors flex items-center justify-between group cursor-pointer"
+                  >
+                    <div>
+                      <p className="text-xs font-semibold text-[#2D2D2A] group-hover:text-[#5A5A40] transition-colors">
+                        {item.title}
+                      </p>
+                      <p className="text-[10px] text-[#7C7B76]">{item.category}</p>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#5A5A40] bg-[#E8E8DF] px-2 py-0.5 rounded border border-[#D5D5C6]">
+                      Jump to view &rarr;
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="p-4 text-center text-xs text-[#7C7B76]">
+                No direct match for &quot;{searchQuery}&quot;. Searching across all portal records...
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Action Controls & User Meta */}
-      <div className="flex items-center gap-2 md:gap-3">
-        {/* GitHub Direct Push Button */}
-        {onOpenGitHubPush && (
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        {/* Judge Showcase 3D Button */}
+        {onOpenJudgeShowcase && (
           <button
-            id="github-push-topbar-btn"
-            onClick={onOpenGitHubPush}
-            title="Direct Push to GitHub Repository"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#2D2D24] hover:bg-[#1E1E18] text-[#F9F9F7] border border-[#3E3E32] transition-colors cursor-pointer shadow-xs"
+            id="judge-showcase-topbar-btn"
+            onClick={onOpenJudgeShowcase}
+            title="Open 3D Judge Showcase Deck & Holographic Passport"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-[#2D2D24] via-[#48483B] to-[#2D2D24] text-[#FFE899] border border-[#FFE899]/40 hover:border-[#FFE899] transition-all cursor-pointer shadow-sm hover:shadow-md animate-pulse"
           >
-            <UploadCloud className="w-3.5 h-3.5 text-[#CFE0D1]" />
-            <span className="hidden sm:inline">Push to GitHub</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#FFE899]" />
+            <span className="hidden sm:inline">3D Judge Deck</span>
           </button>
         )}
 
@@ -292,21 +370,21 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 <User className="w-3.5 h-3.5 text-[#5A5A40]" />
                 <span>My Profile &amp; Settings</span>
               </button>
-              {onOpenGitHubPush && (
+              {onOpenJudgeShowcase && (
                 <button
                   onClick={() => {
-                    onOpenGitHubPush();
+                    onOpenJudgeShowcase();
                     setShowUserMenu(false);
                   }}
-                  className="w-full text-left px-4 py-2 text-xs text-[#2D2D2A] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer font-bold"
+                  className="w-full text-left px-4 py-2 text-xs text-[#2D2D2A] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer font-bold bg-[#FFE899]/20"
                 >
-                  <UploadCloud className="w-3.5 h-3.5 text-[#34583A]" />
-                  <span>Push to GitHub Repo</span>
+                  <Sparkles className="w-3.5 h-3.5 text-[#A07C1C]" />
+                  <span>3D Judge Showcase Deck</span>
                 </button>
               )}
               <button
                 onClick={() => {
-                  onNavigateToTab('help');
+                  onNavigateToTab('help_center');
                   setShowUserMenu(false);
                 }}
                 className="w-full text-left px-4 py-2 text-xs text-[#2D2D2A] hover:bg-[#EBE8E1] flex items-center gap-2 transition-colors cursor-pointer"

@@ -79,7 +79,7 @@ export const PublicPortfolioModal: React.FC<PublicPortfolioModalProps> = ({
           <div className="border-t border-[#E5E2D9] pt-4">
             <h5 className="text-xs font-bold uppercase tracking-wider text-[#7C7B76] mb-2">Verified Top Competencies</h5>
             <div className="flex flex-wrap gap-1.5">
-              {profile.skills.slice(0, 6).map((s) => (
+              {(profile?.skills || []).slice(0, 6).map((s) => (
                 <span key={s.id} className="text-xs bg-[#F9F9F7] text-[#2D2D2A] border border-[#E5E2D9] px-2.5 py-1 rounded-full font-semibold">
                   {s.name} ({s.proficiency}%)
                 </span>

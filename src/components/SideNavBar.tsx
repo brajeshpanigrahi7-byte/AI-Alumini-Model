@@ -13,7 +13,8 @@ import {
   LifeBuoy, 
   LogOut,
   PlusCircle,
-  UploadCloud
+  Trophy,
+  Sparkles
 } from 'lucide-react';
 import { ActiveTab, LanguageCode, UserRole } from '../types';
 import { translations } from '../data/initialData';
@@ -23,7 +24,7 @@ interface SideNavBarProps {
   onTabChange: (tab: ActiveTab) => void;
   onOpenPostOpportunity: () => void;
   onOpenLogout: () => void;
-  onOpenGitHubPush?: () => void;
+  onOpenJudgeShowcase?: () => void;
   currentLanguage: LanguageCode;
   currentRole: UserRole;
 }
@@ -33,7 +34,7 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
   onTabChange,
   onOpenPostOpportunity,
   onOpenLogout,
-  onOpenGitHubPush,
+  onOpenJudgeShowcase,
   currentLanguage,
   currentRole
 }) => {
@@ -56,7 +57,7 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
   return (
     <aside className="hidden md:flex flex-col fixed left-0 top-0 h-screen py-6 px-3 bg-[#2D2D24] text-[#C5C4BA] shadow-xl w-[280px] z-50 overflow-y-auto border-r border-[#3E3E32]">
       {/* Brand Header */}
-      <div className="flex items-center gap-3 mb-6 px-3 mt-12 cursor-pointer" onClick={() => onTabChange('profile')}>
+      <div className="flex items-center gap-3 mb-5 px-3 mt-1 cursor-pointer" onClick={() => onTabChange('profile')}>
         <div className="w-10 h-10 bg-[#E8E8DF] rounded-lg flex items-center justify-center shadow-xs">
           <Building2 className="w-6 h-6 text-[#42422E]" />
         </div>
@@ -66,27 +67,27 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
         </div>
       </div>
 
+      {/* 3D Judge Showcase Button in Sidebar */}
+      {onOpenJudgeShowcase && (
+        <button
+          id="sidebar-judge-showcase-btn"
+          onClick={onOpenJudgeShowcase}
+          className="mx-3 mb-3 bg-gradient-to-r from-[#AA771C] via-[#D4AF37] to-[#8B6508] hover:opacity-95 text-[#1E1E18] font-bold text-xs py-2.5 px-3 rounded-lg flex items-center justify-center gap-2 shadow-md transition-all duration-150 cursor-pointer border border-[#FFE899]/70 animate-pulse"
+        >
+          <Trophy className="w-4 h-4 text-[#1E1E18]" />
+          <span>3D Judge Showcase Deck</span>
+        </button>
+      )}
+
       {/* Post Opportunity Action Button */}
       <button
         id="sidebar-post-opportunity-btn"
         onClick={onOpenPostOpportunity}
-        className="mx-3 mb-4 bg-[#5A5A40] hover:bg-[#4A4A33] text-[#F9F9F7] font-semibold text-sm py-3 px-4 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-all duration-150 hover:shadow-md cursor-pointer border border-[#6B6B4D]"
+        className="mx-3 mb-5 bg-[#5A5A40] hover:bg-[#4A4A33] text-[#F9F9F7] font-semibold text-sm py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-all duration-150 hover:shadow-md cursor-pointer border border-[#6B6B4D]"
       >
         <PlusCircle className="w-4 h-4" />
         <span>{t.postOpportunity || 'Post Opportunity'}</span>
       </button>
-
-      {/* Direct Push to GitHub Button */}
-      {onOpenGitHubPush && (
-        <button
-          id="sidebar-github-push-btn"
-          onClick={onOpenGitHubPush}
-          className="mx-3 mb-6 bg-[#3E3E32] hover:bg-[#4A4A3C] text-[#F9F9F7] font-semibold text-xs py-2 px-3 rounded-lg flex items-center justify-center gap-2 shadow-xs transition-all duration-150 cursor-pointer border border-[#525243]"
-        >
-          <UploadCloud className="w-3.5 h-3.5 text-[#CFE0D1]" />
-          <span>Push to GitHub Repo</span>
-        </button>
-      )}
 
       {/* Navigation Links */}
       <nav className="flex-1 flex flex-col gap-1">

@@ -14,13 +14,19 @@ import {
   SupportTicket,
   SessionInfo
 } from '../types';
+import {
+  ADMIN_BRAJESH_AVATAR,
+  RECRUITER_AAKASH_AVATAR,
+  STUDENT_KARTIK_AVATAR,
+  FACULTY_KOUSHIK_AVATAR
+} from './userAvatars';
 
 export const initialUserProfile: UserProfile = {
-  id: 'usr_brajesh_01',
-  name: 'Brajesh',
-  email: 'brajeshpanigrahi7@gmail.com',
-  title: 'Senior Data Analyst | Enterprise Operations',
-  avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvIFryGeZhW2_6QT4ZOGkLkLicIBavQaCCv83Z27nG_Mmb8s0iadNzAn8mecc3yUeARbDtlRVA4bknRtfnz-ULcXWbR5XXvfA0iSwCfHyCoC1SvMkEcVuf_hkYnwU1kP8S-OXuvXYkUtAob5Kk-rJ2dICHUKFWI5AG4EZghK-Ir54yHMtdIHqhRRZOUTnD_D2QwOX1ctOJJ9RKeD02anBiNGgbtHSV75YP8ViqE47Ljh7xxR8GZFmYyA',
+  id: 'usr_kartik_01',
+  name: 'Kartik',
+  email: 'kartik.student@columbia.edu',
+  title: 'Data Science & Machine Learning Scholar | Final Year',
+  avatar: STUDENT_KARTIK_AVATAR,
   role: 'student',
   location: 'New York, NY',
   verified: true,
@@ -31,8 +37,8 @@ export const initialUserProfile: UserProfile = {
   graduationYear: '2024',
   bio: 'Passionate Data Analyst & Machine Learning Practitioner with solid grounding in Python, SQL data pipelines, predictive modeling, and enterprise business intelligence. Seeking high-impact analytics and engineering internships & full-time roles.',
   resumeUrl: '#',
-  linkedin: 'https://linkedin.com/in/brajesh-demo',
-  github: 'https://github.com/brajesh-nexus',
+  linkedin: 'https://linkedin.com/in/kartik-demo',
+  github: 'https://github.com/kartik-nexus',
   milestones: [
     {
       id: 'm1',
@@ -152,10 +158,10 @@ export const initialUserProfile: UserProfile = {
 
 export const recruiterUserProfile: UserProfile = {
   id: 'usr_sarah_recruiter',
-  name: 'Sarah Lin',
-  email: 'sarah.lin@siemens-talent.com',
+  name: 'Aakash Verma',
+  email: 'aakash.recruiter@siemens-talent.com',
   title: 'Lead Technical Talent Partner | Emerging Tech',
-  avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+  avatar: RECRUITER_AAKASH_AVATAR,
   role: 'recruiter',
   location: 'Munich, DE & New York, NY',
   verified: true,
@@ -166,7 +172,7 @@ export const recruiterUserProfile: UserProfile = {
   graduationYear: '2018',
   bio: 'Talent Acquisition Leader at Siemens specializing in sourcing high-caliber engineering, data science, and AI students from top universities globally. Driving industry-academia capstone cohorts, internship programs, and direct campus recruiting drives.',
   resumeUrl: '#',
-  linkedin: 'https://linkedin.com/in/sarahlin-talent',
+  linkedin: 'https://linkedin.com/in/aakash-talent',
   companyOverview: {
     companyName: 'Siemens Enterprise Digital Solutions',
     industry: 'Industrial Automation & Enterprise AI',
@@ -267,11 +273,11 @@ export const recruiterUserProfile: UserProfile = {
 };
 
 export const academicianUserProfile: UserProfile = {
-  id: 'usr_marcus_prof',
-  name: 'Dr. Marcus Vance',
-  email: 'm.vance@columbia.edu',
+  id: 'usr_koushik_prof',
+  name: 'Prof. Koushik Roy',
+  email: 'koushik.roy@columbia.edu',
   title: 'Professor & Director of Distributed Systems Lab',
-  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+  avatar: FACULTY_KOUSHIK_AVATAR,
   role: 'academician',
   location: 'New York, NY',
   verified: true,
@@ -282,7 +288,7 @@ export const academicianUserProfile: UserProfile = {
   graduationYear: '2012',
   bio: 'Tenured Professor and researcher specializing in large-scale distributed consensus, cloud systems, and machine learning infrastructure. Committed to bridging modern curriculum with high-impact corporate industry research and mentoring students.',
   resumeUrl: '#',
-  linkedin: 'https://linkedin.com/in/prof-marcus-vance',
+  linkedin: 'https://linkedin.com/in/prof-koushik-roy',
   academicOverview: {
     designation: 'Full Professor & Laboratory Director',
     facultyId: 'CU-FAC-CS-8921',
@@ -415,11 +421,11 @@ export const academicianUserProfile: UserProfile = {
 };
 
 export const adminUserProfile: UserProfile = {
-  id: 'usr_admin_dean',
-  name: 'Dean Elena Rostova',
-  email: 'admin.dean@nexus-edu.org',
-  title: 'Dean of Academic Innovation & Partnerships',
-  avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+  id: 'usr_admin_brajesh',
+  name: 'Dean Brajesh Panigrahi',
+  email: 'brajeshpanigrahi7@gmail.com',
+  title: 'Dean of Academic Innovation & Institutional Governance',
+  avatar: ADMIN_BRAJESH_AVATAR,
   role: 'institution_admin',
   location: 'Boston, MA & New York, NY',
   verified: true,
@@ -430,14 +436,14 @@ export const adminUserProfile: UserProfile = {
   graduationYear: '2008',
   bio: 'Academic executive and institutional strategist overseeing academic innovation, NAAC/ABET accreditation, corporate industry MoUs, and student employability outcomes across 8 engineering & computing departments.',
   resumeUrl: '#',
-  linkedin: 'https://linkedin.com/in/dean-elena-rostova',
+  linkedin: 'https://linkedin.com/in/dean-brajesh-panigrahi',
   institutionOverview: {
     accreditationScore: 'NAAC A++ (Score: 3.78/4.00)',
     nirfRank: 'Rank #4 (National Tier-1 Engineering)',
     totalStudents: 4850,
     placementRate: '94.2%',
     activeMoUsCount: 42,
-    signingAuthority: 'Elena Rostova, Dean & Master Registrar Authority',
+    signingAuthority: 'Brajesh Panigrahi, Dean & Master Registrar Authority',
     masterCryptoKey: '0x99a1...ff82 (Consortium Root Authority)',
     establishedYear: '1984',
     campusLocation: 'Consortium Central Campus, New York, NY'
@@ -1533,11 +1539,11 @@ export const initialSupportTickets: SupportTicket[] = [
 ];
 
 export const initialSessionData: SessionInfo = {
-  userId: 'usr_brajesh_01',
-  name: 'Brajesh',
-  email: 'brajeshpanigrahi7@gmail.com',
+  userId: 'usr_kartik_01',
+  name: 'Kartik',
+  email: 'kartik.student@columbia.edu',
   role: 'student',
-  avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvIFryGeZhW2_6QT4ZOGkLkLicIBavQaCCv83Z27nG_Mmb8s0iadNzAn8mecc3yUeARbDtlRVA4bknRtfnz-ULcXWbR5XXvfA0iSwCfHyCoC1SvMkEcVuf_hkYnwU1kP8S-OXuvXYkUtAob5Kk-rJ2dICHUKFWI5AG4EZghK-Ir54yHMtdIHqhRRZOUTnD_D2QwOX1ctOJJ9RKeD02anBiNGgbtHSV75YP8ViqE47Ljh7xxR8GZFmYyA',
+  avatar: STUDENT_KARTIK_AVATAR,
   ipAddress: '198.51.100.42 (Secure VPN)',
   location: 'New York, NY, United States',
   device: 'MacBook Pro 16" (Apple M3 Max)',
@@ -1549,40 +1555,40 @@ export const initialSessionData: SessionInfo = {
 
 export const mockAvailableAccounts = [
   {
-    userId: 'usr_brajesh_01',
-    name: 'Brajesh',
+    userId: 'usr_admin_brajesh',
+    name: 'Dean Brajesh Panigrahi',
     email: 'brajeshpanigrahi7@gmail.com',
-    role: 'student' as const,
-    title: 'Senior Data Analyst | Enterprise Operations',
-    institution: 'Columbia University School of Engineering',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvIFryGeZhW2_6QT4ZOGkLkLicIBavQaCCv83Z27nG_Mmb8s0iadNzAn8mecc3yUeARbDtlRVA4bknRtfnz-ULcXWbR5XXvfA0iSwCfHyCoC1SvMkEcVuf_hkYnwU1kP8S-OXuvXYkUtAob5Kk-rJ2dICHUKFWI5AG4EZghK-Ir54yHMtdIHqhRRZOUTnD_D2QwOX1ctOJJ9RKeD02anBiNGgbtHSV75YP8ViqE47Ljh7xxR8GZFmYyA'
+    role: 'institution_admin' as const,
+    title: 'Dean of Academic Innovation & Governance',
+    institution: 'Nexus Higher Education Consortium',
+    avatar: ADMIN_BRAJESH_AVATAR
   },
   {
     userId: 'usr_sarah_recruiter',
-    name: 'Sarah Lin',
-    email: 'sarah.lin@siemens-talent.com',
+    name: 'Aakash Verma',
+    email: 'aakash.recruiter@siemens-talent.com',
     role: 'recruiter' as const,
     title: 'Lead Technical Talent Partner',
     institution: 'Siemens Enterprise Digital Solutions',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80'
+    avatar: RECRUITER_AAKASH_AVATAR
   },
   {
-    userId: 'usr_marcus_prof',
-    name: 'Dr. Marcus Vance',
-    email: 'm.vance@columbia.edu',
+    userId: 'usr_kartik_01',
+    name: 'Kartik',
+    email: 'kartik.student@columbia.edu',
+    role: 'student' as const,
+    title: 'Data Science & Machine Learning Scholar',
+    institution: 'Columbia University School of Engineering',
+    avatar: STUDENT_KARTIK_AVATAR
+  },
+  {
+    userId: 'usr_koushik_prof',
+    name: 'Prof. Koushik Roy',
+    email: 'koushik.roy@columbia.edu',
     role: 'academician' as const,
     title: 'Professor & Director of Distributed Systems',
     institution: 'Columbia University Department of Computer Science',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
-  },
-  {
-    userId: 'usr_admin_dean',
-    name: 'Dean Elena Rostova',
-    email: 'admin.dean@nexus-edu.org',
-    role: 'institution_admin' as const,
-    title: 'Dean of Academic Innovation & Partnerships',
-    institution: 'Nexus Higher Education Consortium',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80'
+    avatar: FACULTY_KOUSHIK_AVATAR
   }
 ];
 

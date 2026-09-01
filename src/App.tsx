@@ -42,7 +42,7 @@ import { PublicPortfolioModal } from './components/Modals/PublicPortfolioModal';
 import { ResumeModal } from './components/Modals/ResumeModal';
 import { AddMilestoneModal } from './components/Modals/AddMilestoneModal';
 import { LogoutModal } from './components/Modals/LogoutModal';
-import { GitHubPushModal } from './components/Modals/GitHubPushModal';
+import { JudgeShowcaseModal } from './components/ThreeD/JudgeShowcaseModal';
 
 // Safely reads and parses a value from localStorage.
 // If the key doesn't exist, or the saved data is corrupted/invalid JSON,
@@ -66,9 +66,17 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Domain data
-  const [userProfile, setUserProfile] = useState<UserProfile>(() =>
-    loadFromStorage('nexus_user_profile', initialUserProfile)
-  );
+  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
+    const saved = loadFromStorage<UserProfile>('nexus_user_profile', initialUserProfile);
+    if (saved && roleProfilesMap[saved.role] && (!saved.avatar || saved.avatar.includes('images.unsplash.com') || saved.avatar.includes('lh3.googleusercontent.com'))) {
+      return {
+        ...saved,
+        avatar: roleProfilesMap[saved.role].avatar,
+        name: saved.name === 'Brajesh' && saved.role === 'student' ? 'Kartik' : saved.name
+      };
+    }
+    return saved || initialUserProfile;
+  });
 
   const [assessments, setAssessments] = useState(() =>
     loadFromStorage('nexus_assessments', initialAssessments)
@@ -105,7 +113,7 @@ export default function App() {
   const [isAddMilestoneOpen, setIsAddMilestoneOpen] = useState(false);
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
-  const [isGitHubPushOpen, setIsGitHubPushOpen] = useState(false);
+  const [isJudgeShowcaseOpen, setIsJudgeShowcaseOpen] = useState(false);
 
   // Sync to local storage
   useEffect(() => {
@@ -396,7 +404,7 @@ export default function App() {
         onSearchChange={setSearchQuery}
         onNavigateToTab={setActiveTab}
         onOpenLogout={() => setIsLogoutOpen(true)}
-        onOpenGitHubPush={() => setIsGitHubPushOpen(true)}
+        onOpenJudgeShowcase={() => setIsJudgeShowcaseOpen(true)}
         userAvatar={userProfile.avatar}
       />
 
@@ -406,13 +414,13 @@ export default function App() {
         onTabChange={setActiveTab}
         onOpenPostOpportunity={() => setIsPostOpportunityOpen(true)}
         onOpenLogout={() => setIsLogoutOpen(true)}
-        onOpenGitHubPush={() => setIsGitHubPushOpen(true)}
+        onOpenJudgeShowcase={() => setIsJudgeShowcaseOpen(true)}
         currentLanguage={currentLanguage}
         currentRole={currentRole}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-[280px] md:mt-16 pt-6 pb-24 md:pb-12 px-4 md:px-8 max-w-[1440px] mx-auto w-full transition-all">
+      <main className="flex-1 md:ml-[280px] mt-16 pt-6 pb-24 md:pb-12 px-4 md:px-8 max-w-[1440px] mx-auto w-full transition-all">
         {/* Offline Banner if Active */}
         {isOffline && (
           <div className="mb-6 p-3 bg-[#E8E8DF] text-[#42422E] border border-[#D5D5C6] rounded-xl text-xs flex items-center justify-between shadow-xs">
@@ -449,6 +457,7 @@ export default function App() {
             applications={applications}
             onNavigate={setActiveTab}
             onOpenPostOpportunity={() => setIsPostOpportunityOpen(true)}
+            onOpenJudgeShowcase={() => setIsJudgeShowcaseOpen(true)}
           />
         )}
 
@@ -557,10 +566,10 @@ export default function App() {
         onConfirmLogout={handleConfirmLogout}
       />
 
-      <GitHubPushModal
-        isOpen={isGitHubPushOpen}
-        onClose={() => setIsGitHubPushOpen(false)}
-        userEmail={userProfile.email}
+      <JudgeShowcaseModal
+        isOpen={isJudgeShowcaseOpen}
+        onClose={() => setIsJudgeShowcaseOpen(false)}
+        profile={userProfile}
       />
     </div>
   );

@@ -116,7 +116,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
           <div>
             <h2 className="text-xs font-bold uppercase tracking-wider text-[#7C7B76] mb-1.5 font-mono">Verified Core Competencies</h2>
             <p className="text-xs text-[#5F5E59] leading-relaxed">
-              {profile.skills.map(s => `${s.name} (${s.proficiency}%)`).join(', ')}
+              {(profile?.skills || []).map(s => `${s.name} (${s.proficiency}%)`).join(', ')}
             </p>
           </div>
         </div>

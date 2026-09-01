@@ -12,6 +12,7 @@ interface DashboardViewProps {
   applications: Application[];
   onNavigate: (tab: ActiveTab) => void;
   onOpenPostOpportunity?: () => void;
+  onOpenJudgeShowcase?: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
@@ -20,7 +21,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   assessments,
   applications,
   onNavigate,
-  onOpenPostOpportunity
+  onOpenPostOpportunity,
+  onOpenJudgeShowcase
 }) => {
   switch (profile.role) {
     case 'recruiter':
@@ -30,6 +32,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           opportunities={opportunities}
           onNavigate={onNavigate}
           onOpenPostOpportunity={onOpenPostOpportunity}
+          onOpenJudgeShowcase={onOpenJudgeShowcase}
         />
       );
 
@@ -39,6 +42,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           profile={profile}
           opportunities={opportunities}
           onNavigate={onNavigate}
+          onOpenJudgeShowcase={onOpenJudgeShowcase}
         />
       );
 
@@ -48,6 +52,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           profile={profile}
           opportunities={opportunities}
           onNavigate={onNavigate}
+          onOpenJudgeShowcase={onOpenJudgeShowcase}
         />
       );
 
@@ -60,6 +65,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           assessments={assessments}
           applications={applications}
           onNavigate={onNavigate}
+          onOpenJudgeShowcase={onOpenJudgeShowcase}
         />
       );
   }

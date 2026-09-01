@@ -11,3 +11,103 @@
 .font-serif-display {
   font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
 }
+
+/* 3D Perspective & Transform Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.translate-z-10 {
+  transform: translateZ(10px);
+}
+
+.translate-z-20 {
+  transform: translateZ(20px);
+}
+
+.translate-z-30 {
+  transform: translateZ(30px);
+}
+
+.translate-z-40 {
+  transform: translateZ(40px);
+}
+
+/* Holographic Foil and Specular 3D Shimmer */
+@keyframes holo-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hologram-shimmer {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(186, 230, 253, 0.3) 25%,
+    rgba(221, 214, 254, 0.35) 50%,
+    rgba(254, 215, 170, 0.3) 75%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  background-size: 200% 200%;
+  animation: holo-shimmer 6s ease infinite;
+}
+
+.gold-foil-shimmer {
+  background: linear-gradient(
+    120deg,
+    #D4AF37 0%,
+    #FFF8DC 30%,
+    #AA771C 60%,
+    #FDF6C7 80%,
+    #8B6508 100%
+  );
+  background-size: 200% 200%;
+  animation: holo-shimmer 4s ease infinite;
+}
+
+/* Subtle 3D Grid Backdrop */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(90, 90, 64, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(90, 90, 64, 0.05) 1px, transparent 1px);
+}
+
+/* 3D Depth Card Shadow */
+.shadow-3d-card {
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 10px 25px -5px rgba(45, 45, 36, 0.1),
+    0 20px 30px -10px rgba(45, 45, 36, 0.08);
+}
+
+.shadow-3d-hover {
+  box-shadow: 
+    0 20px 40px -15px rgba(45, 45, 36, 0.22),
+    0 0 20px 2px rgba(90, 90, 64, 0.08);
+}
+
