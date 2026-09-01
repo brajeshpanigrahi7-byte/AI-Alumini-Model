@@ -63,6 +63,35 @@ export const HolographicPassport3D: React.FC<HolographicPassport3DProps> = ({
   const currentSkills = currentProfile?.skills || [];
   const verifiedSkills = currentSkills.filter(s => s.verified);
 
+  const isStudent = (profile.role || 'student') === 'student';
+  const roleNameLabel = isStudent
+    ? 'Candidate Name'
+    : profile.role === 'recruiter'
+    ? 'Enterprise Leader'
+    : profile.role === 'academician'
+    ? 'Faculty Scholar'
+    : profile.role === 'institution_admin'
+    ? 'Institutional Dean'
+    : profile.role === 'alumni'
+    ? 'Distinguished Alumna'
+    : 'Member Name';
+
+  const credentialLabel = isStudent
+    ? 'Academic GPA'
+    : profile.role === 'recruiter'
+    ? 'Executive Credential'
+    : profile.role === 'academician'
+    ? 'Doctoral Credential'
+    : profile.role === 'institution_admin'
+    ? 'Doctoral & Leadership'
+    : profile.role === 'alumni'
+    ? 'Degree & Alma Mater'
+    : 'Academic Credential';
+
+  const formattedCredential = isStudent
+    ? (profile.gpa.includes('/ 4') ? profile.gpa : `${profile.gpa} / 4.00`)
+    : profile.gpa.replace(/\s*\/\s*4(\.0+)?/gi, '').trim();
+
   return (
     <div className="w-full flex flex-col items-center">
       {/* 3D Controls Bar */}
@@ -194,7 +223,9 @@ export const HolographicPassport3D: React.FC<HolographicPassport3DProps> = ({
                 {/* Profile Details */}
                 <div className="col-span-8 space-y-1.5" style={{ transform: 'translateZ(20px)' }}>
                   <div>
-                    <span className="text-[10px] text-[#A9A89C] uppercase font-semibold tracking-wider block">Candidate Name</span>
+                    <span className="text-[10px] text-[#A9A89C] uppercase font-semibold tracking-wider block">
+                      {roleNameLabel}
+                    </span>
                     <h4 className="text-lg md:text-xl font-bold text-[#F9F9F7] font-serif-display leading-tight">
                       {profile.name}
                     </h4>
@@ -208,9 +239,9 @@ export const HolographicPassport3D: React.FC<HolographicPassport3DProps> = ({
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-[#A9A89C] block">Academic GPA</span>
-                      <span className="font-bold text-[#FFE899] text-xs">
-                        {profile.gpa.includes('/ 4') ? profile.gpa : `${profile.gpa} / 4.00`}
+                      <span className="text-[10px] text-[#A9A89C] block truncate">{credentialLabel}</span>
+                      <span className="font-bold text-[#FFE899] text-xs block truncate" title={formattedCredential}>
+                        {formattedCredential}
                       </span>
                     </div>
                   </div>
