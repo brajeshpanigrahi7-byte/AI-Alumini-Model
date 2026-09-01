@@ -4,6 +4,7 @@ import { StudentDashboard } from './dashboards/StudentDashboard';
 import { RecruiterDashboard } from './dashboards/RecruiterDashboard';
 import { AcademicianDashboard } from './dashboards/AcademicianDashboard';
 import { AdminDashboard } from './dashboards/AdminDashboard';
+import { AlumniDashboard } from './dashboards/AlumniDashboard';
 
 interface DashboardViewProps {
   profile: UserProfile;
@@ -52,6 +53,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           profile={profile}
           opportunities={opportunities}
           onNavigate={onNavigate}
+          onOpenJudgeShowcase={onOpenJudgeShowcase}
+        />
+      );
+
+    case 'alumni':
+      return (
+        <AlumniDashboard
+          profile={profile}
+          opportunities={opportunities}
+          onNavigate={onNavigate}
+          onOpenPostOpportunity={onOpenPostOpportunity}
           onOpenJudgeShowcase={onOpenJudgeShowcase}
         />
       );

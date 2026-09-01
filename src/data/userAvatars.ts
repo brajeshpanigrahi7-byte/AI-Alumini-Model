@@ -1,8 +1,123 @@
-// High-Fidelity SVG Avatars accurately depicting the 4 provided photos:
+// High-Fidelity SVG Avatars accurately depicting the 5 personas:
 // 1. Institution Admin: Brajesh Resume.png (Charcoal blazer, white open-collar shirt, beard/mustache, office setting)
 // 2. Industry Recruiter: 1000386103.jpg (Black shirt, wavy styled hair, mustache, sunset beach background)
 // 3. Student: Kartik.jpg (Sage green t-shirt, textured short hair, friendly smile, clean ambient backdrop)
 // 4. Faculty / Academician: koushik bgmi.jpeg (Black & grey striped collared shirt, mustache, outdoor campus backdrop)
+// 5. Alumni / Industry Leader: Priya Sharma (Staff AI Architect, navy blazer, modern glasses, tech campus background)
+
+export const ALUMNI_PRIYA_AVATAR = `data:image/svg+xml;utf8,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient (Tech Campus & Innovation Hub) -->
+    <linearGradient id="alumni-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="50%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+    <linearGradient id="alumni-glass-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#6366F1" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Skin Gradients -->
+    <linearGradient id="alumni-skin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2C79D"/>
+      <stop offset="50%" stop-color="#E0A878"/>
+      <stop offset="100%" stop-color="#C68A57"/>
+    </linearGradient>
+    
+    <!-- Hair & Outfit -->
+    <linearGradient id="alumni-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#262626"/>
+      <stop offset="60%" stop-color="#171717"/>
+      <stop offset="100%" stop-color="#0A0A0A"/>
+    </linearGradient>
+    <linearGradient id="alumni-blazer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="50%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="alumni-silk" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+
+    <clipPath id="alumni-circle">
+      <circle cx="250" cy="250" r="250"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#alumni-circle)">
+    <!-- 1. Background Campus Tech Architecture -->
+    <rect width="500" height="500" fill="url(#alumni-bg)"/>
+    <rect x="280" y="0" width="220" height="500" fill="url(#alumni-glass-glow)"/>
+    <line x1="280" y1="0" x2="280" y2="500" stroke="#CBD5E1" stroke-width="4"/>
+    <line x1="380" y1="0" x2="380" y2="500" stroke="#E2E8F0" stroke-width="3"/>
+    
+    <!-- Ambient architectural plants -->
+    <path d="M 0 400 Q 50 340 110 370 Q 170 330 220 380 L 220 500 L 0 500 Z" fill="#0D9488" opacity="0.3"/>
+    <path d="M 320 390 Q 380 340 440 370 L 500 500 L 320 500 Z" fill="#059669" opacity="0.35"/>
+
+    <!-- 2. Dark Navy Executive Tailored Blazer & Sapphire Silk Inner -->
+    <path d="M 60 500 C 60 380 130 330 250 330 C 370 330 440 380 440 500 Z" fill="url(#alumni-blazer)"/>
+    <path d="M 195 330 L 250 435 L 305 330 Z" fill="url(#alumni-silk)"/>
+    
+    <!-- Lapels -->
+    <path d="M 150 340 L 220 445 L 195 500 L 90 500 Z" fill="#172554"/>
+    <path d="M 350 340 L 280 445 L 305 500 L 410 500 Z" fill="#172554"/>
+    
+    <!-- Subtle Gold Alumni Lapel Pin -->
+    <polygon points="175,375 180,385 192,385 182,392 185,404 175,396 165,404 168,392 158,385 170,385" fill="#F59E0B"/>
+
+    <!-- 3. Neck & Throat -->
+    <path d="M 215 260 L 215 340 Q 250 355 285 340 L 285 260 Z" fill="url(#alumni-skin)"/>
+    <path d="M 225 285 Q 250 315 275 285 Z" fill="#B87A46" opacity="0.4"/>
+
+    <!-- 4. Head & Face -->
+    <ellipse cx="250" cy="220" rx="78" ry="94" fill="url(#alumni-skin)"/>
+    
+    <!-- Ears -->
+    <ellipse cx="172" cy="225" rx="10" ry="18" fill="#E0A878"/>
+    <ellipse cx="328" cy="225" rx="10" ry="18" fill="#E0A878"/>
+    <!-- Pearl Earrings -->
+    <circle cx="172" cy="236" r="4.5" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <circle cx="328" cy="236" r="4.5" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- 5. Long Flowing Dark Hair with Highlights -->
+    <path d="M 160 210 C 150 120 190 95 250 95 C 310 95 350 120 340 210 C 355 280 345 380 320 420 C 310 340 330 250 320 200 C 310 135 280 120 250 120 C 220 120 190 135 180 200 C 170 250 190 340 180 420 C 155 380 145 280 160 210 Z" fill="url(#alumni-hair)"/>
+    <path d="M 180 145 C 210 110 290 110 320 145 C 290 125 210 125 180 145 Z" fill="#383330"/>
+
+    <!-- 6. Eyebrows -->
+    <path d="M 195 185 Q 220 176 235 185" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M 265 185 Q 280 176 305 185" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+    <!-- 7. Warm Confident Eyes -->
+    <ellipse cx="216" cy="202" rx="11" ry="8" fill="#FFFFFF"/>
+    <circle cx="217" cy="202" r="5.5" fill="#2E1B10"/>
+    <circle cx="219" cy="200" r="1.8" fill="#FFFFFF"/>
+    
+    <ellipse cx="284" cy="202" rx="11" ry="8" fill="#FFFFFF"/>
+    <circle cx="283" cy="202" r="5.5" fill="#2E1B10"/>
+    <circle cx="285" cy="200" r="1.8" fill="#FFFFFF"/>
+
+    <!-- 8. Modern Sleek Wireframe Glasses -->
+    <rect x="198" y="190" width="38" height="24" rx="8" fill="none" stroke="#64748B" stroke-width="2.2"/>
+    <rect x="264" y="190" width="38" height="24" rx="8" fill="none" stroke="#64748B" stroke-width="2.2"/>
+    <line x1="236" y1="200" x2="264" y2="200" stroke="#64748B" stroke-width="2.2"/>
+    <line x1="198" y1="198" x2="175" y2="192" stroke="#64748B" stroke-width="1.8"/>
+    <line x1="302" y1="198" x2="325" y2="192" stroke="#64748B" stroke-width="1.8"/>
+
+    <!-- 9. Nose & Smile -->
+    <path d="M 250 196 L 252 228 Q 254 235 248 237 Q 242 235 244 228 Z" fill="none"/>
+    <path d="M 248 200 Q 253 226 256 232 Q 248 237 242 232" stroke="#A86A38" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+
+    <!-- Cheerful Inspiring Smile -->
+    <path d="M 226 256 Q 250 278 274 256" stroke="#991B1B" stroke-width="2.2" fill="none"/>
+    <path d="M 228 256 Q 250 274 272 256 Z" fill="#FFFFFF"/>
+    <path d="M 226 256 Q 250 262 274 256" stroke="#991B1B" stroke-width="1" fill="none"/>
+  </g>
+</svg>
+`)}`;
 
 export const ADMIN_BRAJESH_AVATAR = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">

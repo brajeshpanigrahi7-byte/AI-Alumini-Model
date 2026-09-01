@@ -12,13 +12,16 @@ import {
   HelpArticle,
   FAQItem,
   SupportTicket,
-  SessionInfo
+  SessionInfo,
+  AlumniContributionOffering,
+  AlumniHelpRequest
 } from '../types';
 import {
   ADMIN_BRAJESH_AVATAR,
   RECRUITER_AAKASH_AVATAR,
   STUDENT_KARTIK_AVATAR,
-  FACULTY_KOUSHIK_AVATAR
+  FACULTY_KOUSHIK_AVATAR,
+  ALUMNI_PRIYA_AVATAR
 } from './userAvatars';
 
 export const initialUserProfile: UserProfile = {
@@ -524,11 +527,333 @@ export const adminUserProfile: UserProfile = {
   ]
 };
 
+export const alumniInitialOfferings: AlumniContributionOffering[] = [
+  // Help for Alma Mater Students
+  {
+    id: 'off_am_1',
+    category: 'Mentorship',
+    title: '1-on-1 AI & Distributed Systems Career Mentorship',
+    description: 'Personalized 45-minute bi-weekly strategy session covering technical roadmaps, FAANG leveling expectations, and grad school guidance for Columbia scholars.',
+    targetAudience: 'alma_mater_only',
+    slotsAvailablePerMonth: 6,
+    format: '1-on-1 Virtual',
+    enabled: true,
+    prerequisiteCondition: 'Verified Skill Passport score >= 80%',
+    tags: ['AI Career Roadmap', 'Grad School Prep', 'Tech Strategy']
+  },
+  {
+    id: 'off_am_2',
+    category: 'Referral',
+    title: 'Priority Fast-Track Company Referral (Google Cloud / DeepMind)',
+    description: 'Direct employee referral submitted straight to the internal engineering recruiting team with a personalized endorsement note.',
+    targetAudience: 'alma_mater_only',
+    slotsAvailablePerMonth: 4,
+    format: 'Async Video/Code Review',
+    enabled: true,
+    prerequisiteCondition: 'Completed 2+ Portfolio Projects + GPA >= 3.5',
+    tags: ['Google DeepMind', 'Fast-Track Screen', 'SWE & ML']
+  },
+  {
+    id: 'off_am_3',
+    category: 'Resume Review',
+    title: 'Comprehensive Resume & Portfolio Teardown Clinic',
+    description: 'Detailed asynchronous markup of your resume and GitHub repositories, optimizing for ATS filters and engineering manager readability.',
+    targetAudience: 'alma_mater_only',
+    slotsAvailablePerMonth: 8,
+    format: 'Async Video/Code Review',
+    enabled: true,
+    prerequisiteCondition: 'Uploaded PDF Resume in Document Vault',
+    tags: ['ATS Optimization', 'GitHub Audit', 'Impact Metrics']
+  },
+  {
+    id: 'off_am_4',
+    category: 'Mock Interview',
+    title: 'FAANG-Standard Mock Technical & System Design Session',
+    description: 'Realistic 60-minute interview simulation with live code evaluation in C++/Python, followed by a 15-minute diagnostic debrief.',
+    targetAudience: 'alma_mater_only',
+    slotsAvailablePerMonth: 4,
+    format: '1-on-1 Virtual',
+    enabled: true,
+    prerequisiteCondition: 'Passed Algorithm Benchmark Assessment',
+    tags: ['LeetCode Patterns', 'System Design', 'Behavioral STAR']
+  },
+  {
+    id: 'off_am_5',
+    category: 'Capstone Advisory',
+    title: 'Final-Year Capstone Project Co-Advising & Tech Stack Review',
+    description: 'Industry co-advisor for undergraduate senior capstone teams building scalable cloud, ML, or distributed systems projects.',
+    targetAudience: 'alma_mater_only',
+    slotsAvailablePerMonth: 2,
+    format: '1-on-1 Virtual',
+    enabled: true,
+    prerequisiteCondition: 'Department Capstone Team of 3-4 Scholars',
+    tags: ['Architecture Review', 'Industry Scalability', 'Patenting']
+  },
+  {
+    id: 'off_am_6',
+    category: 'Scholarship',
+    title: 'Alumni Micro-Grant & Cloud GPU Sponsorship ($1,500 Fund)',
+    description: 'Sponsored cloud computation credits (GCP A100 / H100) and conference travel grants for high-achieving student researchers.',
+    targetAudience: 'alma_mater_only',
+    slotsAvailablePerMonth: 3,
+    format: 'AMA Session',
+    enabled: true,
+    prerequisiteCondition: 'Demonstrated Open Source / Research Compute Need',
+    tags: ['Endowment', 'GCP GPU Credits', 'Conference Travel']
+  },
+
+  // Help for Students across Other Institutions
+  {
+    id: 'off_cc_1',
+    category: 'Open Office Hours',
+    title: 'Open Industry Office Hours & Tech Career AMA',
+    description: 'Open group office hours every alternate Saturday for students from all universities to ask questions about breaking into AI and tech.',
+    targetAudience: 'cross_campus_all',
+    slotsAvailablePerMonth: 25,
+    format: 'AMA Session',
+    enabled: true,
+    prerequisiteCondition: 'Open to all registered student accounts',
+    tags: ['Open to All Campuses', 'Tech Career AMA', 'Bi-weekly Virtual']
+  },
+  {
+    id: 'off_cc_2',
+    category: 'Open Source',
+    title: 'Open-Source Production AI & Agent Architecture PR Reviews',
+    description: 'Code-level architectural reviews and mentorship on public GitHub repositories to help external students land standout open-source contributions.',
+    targetAudience: 'cross_campus_all',
+    slotsAvailablePerMonth: 10,
+    format: 'Async Video/Code Review',
+    enabled: true,
+    prerequisiteCondition: 'Public GitHub Pull Request URL',
+    tags: ['GitHub Mentoring', 'Code Quality', 'Open Source Contributor']
+  },
+  {
+    id: 'off_cc_3',
+    category: 'Masterclass',
+    title: 'Masterclass: Production GenAI & Multi-Agent Systems in 2026',
+    description: 'Quarterly 90-minute live interactive masterclass with live coding, architectural patterns, and verified completion credentials.',
+    targetAudience: 'cross_campus_all',
+    slotsAvailablePerMonth: 150,
+    format: 'Live Webinar',
+    enabled: true,
+    prerequisiteCondition: 'Basic Python/TypeScript proficiency',
+    tags: ['Free Masterclass', 'GenAI Architecture', 'Certificate Issued']
+  },
+  {
+    id: 'off_cc_4',
+    category: 'Mentorship',
+    title: 'National Hackathon Technical Mentoring & Architecture Review',
+    description: 'On-demand technical mentoring and pitch feedback for student builder teams competing in national and collegiate hackathons.',
+    targetAudience: 'cross_campus_all',
+    slotsAvailablePerMonth: 12,
+    format: '1-on-1 Virtual',
+    enabled: true,
+    prerequisiteCondition: 'Active Hackathon Participant',
+    tags: ['Hackathon Advice', 'Rapid Prototyping', 'Pitch Deck']
+  },
+  {
+    id: 'off_cc_5',
+    category: 'Referral',
+    title: 'Global Tech Opportunities & Interviewing Guide Digest',
+    description: 'Curated monthly bulletin of vetted open internships, entry-level engineering roles, and preparation cheat sheets for all students.',
+    targetAudience: 'cross_campus_all',
+    slotsAvailablePerMonth: 30,
+    format: 'Async Video/Code Review',
+    enabled: true,
+    prerequisiteCondition: 'Verified Skill Passport score >= 85%',
+    tags: ['Industry Requisition', 'Interview Preparation Guide']
+  }
+];
+
+export const alumniInitialRequests: AlumniHelpRequest[] = [
+  {
+    id: 'req_alumni_01',
+    studentId: 'usr_kartik_01',
+    studentName: 'Kartik',
+    studentAvatar: STUDENT_KARTIK_AVATAR,
+    studentInstitution: 'Columbia University School of Engineering',
+    isAlmaMater: true,
+    studentDepartment: 'Data Science & Applied Statistics',
+    studentGpa: '3.92 / 4.00',
+    skillPassportScore: 92,
+    offeringCategory: 'Referral',
+    topicTitle: 'Google DeepMind AI Engineering Fast-Track Referral',
+    message: 'Hi Priya! I am a final-year Columbia scholar specializing in ML pipelines and low-latency algorithms. I would love your review and referral for the Graduate AI Engineer position.',
+    requestedDate: 'Yesterday at 04:15 PM',
+    status: 'Pending',
+    scheduledSlot: 'Thursday, 05:00 PM EST'
+  },
+  {
+    id: 'req_alumni_02',
+    studentId: 'usr_sarah_mit',
+    studentName: 'Sarah Jenkins',
+    studentAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    studentInstitution: 'Massachusetts Institute of Technology (MIT)',
+    isAlmaMater: false,
+    studentDepartment: 'EECS Department',
+    studentGpa: '3.88 / 4.00',
+    skillPassportScore: 88,
+    offeringCategory: 'Open Source',
+    topicTitle: 'Autonomous Agent Framework Pull Request Review',
+    message: 'Hello Priya, I have contributed a new memory caching mechanism to an open-source agent framework and would deeply appreciate an industry PR review from you during open hours.',
+    requestedDate: '2 days ago',
+    status: 'Accepted',
+    meetingLink: 'https://meet.google.com/nexus-alumni-sarah',
+    scheduledSlot: 'Saturday, 11:30 AM EST'
+  },
+  {
+    id: 'req_alumni_03',
+    studentId: 'usr_rohan_columbia',
+    studentName: 'Rohan Gupta',
+    studentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    studentInstitution: 'Columbia University School of Engineering',
+    isAlmaMater: true,
+    studentDepartment: 'Computer Science Department',
+    studentGpa: '3.85 / 4.00',
+    skillPassportScore: 90,
+    offeringCategory: 'Mock Interview',
+    topicTitle: 'Distributed Systems & FAANG Mock Interview',
+    message: 'Excited to practice system design scaling and consensus protocols ahead of upcoming technical on-sites. Looking forward to your guidance as a fellow Columbia alumna!',
+    requestedDate: '3 days ago',
+    status: 'Accepted',
+    meetingLink: 'https://meet.google.com/nexus-alumni-rohan',
+    scheduledSlot: 'Friday, 03:00 PM EST'
+  },
+  {
+    id: 'req_alumni_04',
+    studentId: 'usr_elena_stanford',
+    studentName: 'Elena Rostova',
+    studentAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+    studentInstitution: 'Stanford University',
+    isAlmaMater: false,
+    studentDepartment: 'Symbolic Systems Program',
+    studentGpa: '3.95 / 4.00',
+    skillPassportScore: 94,
+    offeringCategory: 'Open Office Hours',
+    topicTitle: 'Career Strategy for Multimodal Foundation Models',
+    message: 'Attended your masterclass on multi-agent architectures! Would love 15 minutes during your open cross-campus hours to discuss my research direction.',
+    requestedDate: 'Aug 28, 2026',
+    status: 'Completed',
+    scheduledSlot: 'Completed on Aug 29'
+  }
+];
+
+export const alumniUserProfile: UserProfile = {
+  id: 'usr_priya_alumni',
+  name: 'Priya Sharma',
+  email: 'priya.sharma@alumni.columbia.edu',
+  title: 'Staff AI Architect @ Google DeepMind | Columbia Class of 2021',
+  avatar: ALUMNI_PRIYA_AVATAR,
+  role: 'alumni',
+  location: 'New York, NY & Mountain View, CA',
+  verified: true,
+  completionPercentage: 98,
+  institution: 'Columbia University School of Engineering (Alumna)',
+  department: 'Department of Computer Science & AI (Class of 2021)',
+  gpa: 'M.S. Computer Science (Columbia 2021) • B.S. IIT Delhi',
+  graduationYear: '2021',
+  bio: 'Staff AI Architect at Google DeepMind leading multi-agent LLM systems and distributed inference engines. Passionate Columbia alumna dedicated to mentoring rising engineers, offering priority referrals, and hosting open masterclasses for all aspiring technologists.',
+  resumeUrl: '#',
+  linkedin: 'https://linkedin.com/in/priya-sharma-deepmind',
+  github: 'https://github.com/priya-sharma-ai',
+  alumniOverview: {
+    almaMater: 'Columbia University School of Engineering',
+    degreeEarned: 'M.S. in Computer Science (Specialization: Machine Learning)',
+    graduationClass: 'Class of 2021 (Summa Cum Laude)',
+    currentCompany: 'Google DeepMind / Google Cloud AI',
+    designation: 'Staff AI Architect & Tech Lead',
+    yearsOfExperience: 6,
+    alumniChapter: 'Columbia Alumni Association of Greater New York & Global Tech Chapter',
+    mentorshipBandwidth: '4-6 Hours / Week (Evenings & Weekends)',
+    totalStudentsMentored: 48,
+    activeReferralsCount: 14,
+    scholarshipFundContributed: '$12,500 (Endowment & GPU Grants)',
+    offerings: alumniInitialOfferings
+  },
+  milestones: [
+    {
+      id: 'alm1',
+      title: 'Promoted to Staff AI Architect at Google DeepMind',
+      date: 'January 2025',
+      category: 'achievement',
+      description: 'Architecting ultra-low latency transformer inference engines serving billions of daily production tokens.',
+      issuer: 'Google DeepMind Leadership',
+      verified: true,
+      verificationHash: '0x88c1...33af'
+    },
+    {
+      id: 'alm2',
+      title: 'Columbia University Distinguished Young Alumna Award',
+      date: 'May 2024',
+      category: 'achievement',
+      description: 'Honored for exceptional technical leadership and outstanding mentorship contributions to the engineering student body.',
+      issuer: 'Columbia Engineering Alumni Association',
+      verified: true,
+      verificationHash: '0x992d...44e1'
+    },
+    {
+      id: 'alm3',
+      title: 'Graduated M.S. Computer Science with Honors',
+      date: 'May 2021',
+      category: 'education',
+      description: 'Completed graduate thesis on distributed attention mechanisms under Columbia Computer Science Faculty.',
+      issuer: 'Columbia University in the City of New York',
+      verified: true,
+      verificationHash: '0x11ee...77ba'
+    }
+  ],
+  skills: [
+    { id: 'alms1', name: 'Multi-Agent LLM Architectures', category: 'Technical', proficiency: 98, verified: true, endorsementsCount: 84, industryBenchmark: 92 },
+    { id: 'alms2', name: 'Distributed GPU Inference & Kubernetes', category: 'Technical', proficiency: 96, verified: true, endorsementsCount: 78, industryBenchmark: 88 },
+    { id: 'alms3', name: 'Technical Mentorship & Career Coaching', category: 'Soft Skills', proficiency: 95, verified: true, endorsementsCount: 92, industryBenchmark: 85 },
+    { id: 'alms4', name: 'FAANG Interview Strategy & System Design', category: 'Domain', proficiency: 97, verified: true, endorsementsCount: 88, industryBenchmark: 85 },
+    { id: 'alms5', name: 'Open-Source Project Leadership', category: 'Technical', proficiency: 92, verified: true, endorsementsCount: 65, industryBenchmark: 80 }
+  ],
+  certifications: [
+    {
+      id: 'almc1',
+      name: 'Google Cloud Certified Fellow — Hybrid Multi-Cloud',
+      issuer: 'Google Cloud Certification Board',
+      issueDate: 'Mar 2024',
+      expiryDate: 'Mar 2027',
+      credentialId: 'GCC-FELLOW-9921-AI',
+      credentialUrl: 'https://cloud.google.com/certification',
+      verified: true,
+      badgeIcon: 'cloud',
+      skills: ['Cloud Architecture', 'TensorFlow', 'Kubernetes', 'Vertex AI']
+    },
+    {
+      id: 'almc2',
+      name: 'Columbia Engineering Lifetime Alumni Fellow',
+      issuer: 'Columbia Alumni Association',
+      issueDate: 'Jun 2021',
+      credentialId: 'CU-ALUM-2021-PRIYA',
+      credentialUrl: 'https://alumni.columbia.edu',
+      verified: true,
+      badgeIcon: 'award',
+      skills: ['Institutional Mentorship', 'Alumni Leadership']
+    }
+  ],
+  projects: [
+    {
+      id: 'almp1',
+      title: 'Nexus Open AI Agent Benchmark Suite',
+      role: 'Founding Author & Maintainer',
+      duration: 'Ongoing (2024-2026)',
+      description: 'Open-source benchmark tool evaluating tool-calling accuracy, multi-step planning, and latency for autonomous coding agents.',
+      techStack: ['Python', 'TypeScript', 'Docker', 'Google Gemini API', 'Ollama'],
+      githubUrl: 'https://github.com/priya-sharma-ai/nexus-agent-bench',
+      verifiedByFaculty: 'Columbia AI Lab & Open Source Community'
+    }
+  ]
+};
+
 export const roleProfilesMap: Record<UserRole, UserProfile> = {
   student: initialUserProfile,
   recruiter: recruiterUserProfile,
   academician: academicianUserProfile,
-  institution_admin: adminUserProfile
+  institution_admin: adminUserProfile,
+  alumni: alumniUserProfile
 };
 
 
@@ -1179,6 +1504,7 @@ export const translations: Record<string, Record<string, string>> = {
     roleRecruiter: 'Industry Recruiter',
     roleAcademician: 'Faculty / Academician',
     roleAdmin: 'Institution Admin',
+    roleAlumni: 'Alumni Mentor / Partner',
     switchRole: 'Switch Role View',
     offlineStatus: 'Offline Cache Active',
     onlineStatus: 'Live Cloud Sync'
@@ -1215,6 +1541,7 @@ export const translations: Record<string, Record<string, string>> = {
     roleRecruiter: 'Reclutador de la Industria',
     roleAcademician: 'Docente / Académico',
     roleAdmin: 'Administrador Institucional',
+    roleAlumni: 'Mentor / Socio Exalumno',
     switchRole: 'Cambiar Rol',
     offlineStatus: 'Caché Desconectado',
     onlineStatus: 'Sincronización en la Nube'
@@ -1251,6 +1578,7 @@ export const translations: Record<string, Record<string, string>> = {
     roleRecruiter: 'उद्योग भर्तीकर्ता',
     roleAcademician: 'संकाय / शिक्षाविद',
     roleAdmin: 'संस्थान व्यवस्थापक',
+    roleAlumni: 'पूर्व छात्र मेंटर',
     switchRole: 'भूमिका बदलें',
     offlineStatus: 'ऑफ़लाइन कैश सक्रिय',
     onlineStatus: 'क्लाउड सिंक सक्रिय'
@@ -1287,6 +1615,7 @@ export const translations: Record<string, Record<string, string>> = {
     roleRecruiter: 'Recruteur Industrie',
     roleAcademician: 'Enseignant / Chercheur',
     roleAdmin: 'Admin Institutionnel',
+    roleAlumni: 'Mentor / Partenaire Ancien Élève',
     switchRole: 'Changer de Rôle',
     offlineStatus: 'Cache Hors Ligne',
     onlineStatus: 'Synchro Cloud Active'
@@ -1323,6 +1652,7 @@ export const translations: Record<string, Record<string, string>> = {
     roleRecruiter: 'Industrie-Recruiter',
     roleAcademician: 'Dozent / Wissenschaftler',
     roleAdmin: 'Institutions-Admin',
+    roleAlumni: 'Alumni-Mentor / Partner',
     switchRole: 'Rolle wechseln',
     offlineStatus: 'Offline-Cache aktiv',
     onlineStatus: 'Cloud-Synchronisierung aktiv'
@@ -1359,6 +1689,7 @@ export const translations: Record<string, Record<string, string>> = {
     roleRecruiter: '企業採用担当',
     roleAcademician: '教員・研究者',
     roleAdmin: '教育機関管理者',
+    roleAlumni: '卒業生メンター',
     switchRole: '役割を切り替え',
     offlineStatus: 'オフラインキャッシュ',
     onlineStatus: 'クラウド同期中'
@@ -1589,6 +1920,15 @@ export const mockAvailableAccounts = [
     title: 'Professor & Director of Distributed Systems',
     institution: 'Columbia University Department of Computer Science',
     avatar: FACULTY_KOUSHIK_AVATAR
+  },
+  {
+    userId: 'usr_priya_alumni',
+    name: 'Priya Sharma',
+    email: 'priya.sharma@alumni.columbia.edu',
+    role: 'alumni' as const,
+    title: 'Staff AI Architect @ Google DeepMind | Class of 2021',
+    institution: 'Columbia Engineering Alumni Association',
+    avatar: ALUMNI_PRIYA_AVATAR
   }
 ];
 

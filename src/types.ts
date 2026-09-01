@@ -1,4 +1,4 @@
-export type UserRole = 'student' | 'recruiter' | 'academician' | 'institution_admin';
+export type UserRole = 'student' | 'recruiter' | 'academician' | 'institution_admin' | 'alumni';
 
 export type ActiveTab = 
   | 'profile'
@@ -14,6 +14,38 @@ export type ActiveTab =
   | 'help_center';
 
 export type LanguageCode = 'en' | 'es' | 'hi' | 'fr' | 'de' | 'ja';
+
+export interface AlumniContributionOffering {
+  id: string;
+  category: 'Mentorship' | 'Referral' | 'Resume Review' | 'Mock Interview' | 'Capstone Advisory' | 'Masterclass' | 'Scholarship' | 'Open Office Hours' | 'Open Source';
+  title: string;
+  description: string;
+  targetAudience: 'alma_mater_only' | 'cross_campus_all';
+  slotsAvailablePerMonth: number;
+  format: '1-on-1 Virtual' | 'In-Person Campus' | 'Async Video/Code Review' | 'Live Webinar' | 'AMA Session';
+  enabled: boolean;
+  prerequisiteCondition?: string;
+  tags: string[];
+}
+
+export interface AlumniHelpRequest {
+  id: string;
+  studentId: string;
+  studentName: string;
+  studentAvatar: string;
+  studentInstitution: string;
+  isAlmaMater: boolean;
+  studentDepartment: string;
+  studentGpa: string;
+  skillPassportScore: number;
+  offeringCategory: string;
+  topicTitle: string;
+  message: string;
+  requestedDate: string;
+  status: 'Pending' | 'Accepted' | 'Completed' | 'ReferredToHR';
+  meetingLink?: string;
+  scheduledSlot?: string;
+}
 
 export interface Milestone {
   id: string;
@@ -129,6 +161,20 @@ export interface UserProfile {
     masterCryptoKey: string;
     establishedYear: string;
     campusLocation: string;
+  };
+  alumniOverview?: {
+    almaMater: string;
+    degreeEarned: string;
+    graduationClass: string;
+    currentCompany: string;
+    designation: string;
+    yearsOfExperience: number;
+    alumniChapter: string;
+    mentorshipBandwidth: string;
+    totalStudentsMentored: number;
+    activeReferralsCount: number;
+    scholarshipFundContributed: string;
+    offerings: AlumniContributionOffering[];
   };
 }
 

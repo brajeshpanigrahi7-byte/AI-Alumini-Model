@@ -41,17 +41,17 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
   const t = translations[currentLanguage] || translations.en;
 
   const navItems = [
-    { id: 'profile', label: 'My Digital Profile', icon: BadgeCheck, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'dashboard', label: t.dashboard || 'Dashboard', icon: LayoutDashboard, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'skill_passport', label: t.skillPassport || 'Skill Passport', icon: BadgeCheck, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'assessments', label: t.assessments || 'Assessments', icon: HelpCircle, roles: ['student', 'recruiter', 'institution_admin'] },
-    { id: 'opportunities', label: t.opportunities || 'Opportunities', icon: Briefcase, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'learning_programs', label: t.learningPrograms || 'Learning Programs', icon: GraduationCap, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'academician_hub', label: t.academicianHub || 'Academician Hub', icon: Landmark, roles: ['academician', 'student', 'recruiter', 'institution_admin'] },
-    { id: 'analytics', label: t.analytics || 'Analytics', icon: BarChart3, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'documents', label: t.documents || 'Document Vault', icon: FolderLock, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'collaboration', label: t.collaboration || 'Collaboration Hub', icon: Handshake, roles: ['student', 'recruiter', 'academician', 'institution_admin'] },
-    { id: 'help_center', label: t.helpCenter || 'Help Center', icon: LifeBuoy, roles: ['student', 'recruiter', 'academician', 'institution_admin'] }
+    { id: 'profile', label: 'My Digital Profile', icon: BadgeCheck, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'dashboard', label: t.dashboard || 'Dashboard', icon: LayoutDashboard, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'skill_passport', label: t.skillPassport || 'Skill Passport', icon: BadgeCheck, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'assessments', label: t.assessments || 'Assessments', icon: HelpCircle, roles: ['student', 'recruiter', 'institution_admin', 'alumni'] },
+    { id: 'opportunities', label: t.opportunities || 'Opportunities', icon: Briefcase, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'learning_programs', label: t.learningPrograms || 'Learning Programs', icon: GraduationCap, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'academician_hub', label: t.academicianHub || 'Academician Hub', icon: Landmark, roles: ['academician', 'student', 'recruiter', 'institution_admin', 'alumni'] },
+    { id: 'analytics', label: t.analytics || 'Analytics', icon: BarChart3, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'documents', label: t.documents || 'Document Vault', icon: FolderLock, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'collaboration', label: t.collaboration || 'Collaboration Hub', icon: Handshake, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] },
+    { id: 'help_center', label: t.helpCenter || 'Help Center', icon: LifeBuoy, roles: ['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] }
   ];
 
   return (

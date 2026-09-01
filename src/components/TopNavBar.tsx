@@ -62,7 +62,8 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     student: { label: t.roleStudent || 'Student', badgeColor: 'bg-[#E8E8DF] text-[#42422E] border border-[#D5D5C6]' },
     recruiter: { label: t.roleRecruiter || 'Industry Recruiter', badgeColor: 'bg-[#EAF1EB] text-[#34583A] border border-[#CFE0D1]' },
     academician: { label: t.roleAcademician || 'Faculty / Academician', badgeColor: 'bg-[#F7F3E8] text-[#7A6A32] border border-[#E9E0C7]' },
-    institution_admin: { label: t.roleAdmin || 'Institution Admin', badgeColor: 'bg-[#F4ECE4] text-[#8C5E3C] border border-[#E6D4C3]' }
+    institution_admin: { label: t.roleAdmin || 'Institution Admin', badgeColor: 'bg-[#F4ECE4] text-[#8C5E3C] border border-[#E6D4C3]' },
+    alumni: { label: (t as any).roleAlumni || 'Alumni Mentor / Partner', badgeColor: 'bg-[#EBF3ED] text-[#2D5A3C] border border-[#B8D5BC]' }
   };
 
   // Quick suggestions for global search
@@ -70,6 +71,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     { title: 'Machine Learning & Python Assessments', category: 'Assessments', tab: 'assessments', role: 'student' },
     { title: 'Siemens Enterprise AI Internship', category: 'Opportunities', tab: 'opportunities', role: 'student' },
     { title: 'Digital Skill Passport Verification', category: 'Passport', tab: 'skill_passport', role: 'student' },
+    { title: 'Alumni Mentorship & Direct Company Referrals', category: 'Alumni', tab: 'dashboard', role: 'alumni' },
     { title: 'Faculty Development Program (FDP)', category: 'Faculty', tab: 'academician_hub', role: 'academician' },
     { title: 'Institution NAAC & ABET Governance', category: 'Accreditation', tab: 'analytics', role: 'institution_admin' },
     { title: 'Document Vault & Degree Certificates', category: 'Documents', tab: 'documents', role: 'student' },
@@ -227,7 +229,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               <div className="px-3 py-1.5 text-xs font-semibold text-[#7C7B76] uppercase tracking-wider">
                 {t.switchRole}
               </div>
-              {(['student', 'recruiter', 'academician', 'institution_admin'] as UserRole[]).map((role) => (
+              {(['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] as UserRole[]).map((role) => (
                 <button
                   key={role}
                   onClick={() => {

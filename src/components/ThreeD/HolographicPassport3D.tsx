@@ -210,7 +210,7 @@ export const HolographicPassport3D: React.FC<HolographicPassport3DProps> = ({
                     <div>
                       <span className="text-[10px] text-[#A9A89C] block">Academic GPA</span>
                       <span className="font-bold text-[#FFE899] text-xs">
-                        {profile.gpa} / 4.0 (Cum Laude)
+                        {profile.gpa.includes('/ 4') ? profile.gpa : `${profile.gpa} / 4.00`}
                       </span>
                     </div>
                   </div>
