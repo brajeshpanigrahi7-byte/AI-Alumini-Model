@@ -55,15 +55,15 @@ export const SideNavBar: React.FC<SideNavBarProps> = ({
   ];
 
   return (
-    <aside className="hidden md:flex flex-col fixed left-0 top-0 h-screen py-6 px-3 bg-[#2D2D24] text-[#C5C4BA] shadow-xl w-[280px] z-50 overflow-y-auto border-r border-[#3E3E32]">
+    <aside className="hidden md:flex flex-col fixed left-0 top-0 h-screen py-5 lg:py-6 px-2.5 lg:px-3 bg-[#2D2D24] text-[#C5C4BA] shadow-xl w-[240px] lg:w-[280px] z-50 overflow-y-auto border-r border-[#3E3E32]">
       {/* Brand Header */}
-      <div className="flex items-center gap-3 mb-5 px-3 mt-1 cursor-pointer" onClick={() => onTabChange('profile')}>
-        <div className="w-10 h-10 bg-[#E8E8DF] rounded-lg flex items-center justify-center shadow-xs">
-          <Building2 className="w-6 h-6 text-[#42422E]" />
+      <div className="flex items-center gap-2.5 lg:gap-3 mb-4 lg:mb-5 px-2 lg:px-3 mt-1 cursor-pointer" onClick={() => onTabChange('profile')}>
+        <div className="w-9 h-9 lg:w-10 lg:h-10 bg-[#E8E8DF] rounded-lg flex items-center justify-center shadow-xs shrink-0">
+          <Building2 className="w-5 h-5 lg:w-6 lg:h-6 text-[#42422E]" />
         </div>
-        <div>
-          <h2 className="text-base font-bold text-[#F9F9F7] tracking-tight leading-tight font-serif-display">SkillBridge Nexus</h2>
-          <p className="text-xs text-[#A3A380]">{t.enterprisePortal || 'Enterprise Portal'}</p>
+        <div className="min-w-0">
+          <h2 className="text-sm lg:text-base font-bold text-[#F9F9F7] tracking-tight leading-tight font-serif-display truncate">SkillBridge Nexus</h2>
+          <p className="text-[11px] lg:text-xs text-[#A3A380] truncate">{t.enterprisePortal || 'Enterprise Portal'}</p>
         </div>
       </div>
 

@@ -10,7 +10,8 @@ import {
   X,
   User,
   LogOut,
-  LifeBuoy
+  LifeBuoy,
+  Menu
 } from 'lucide-react';
 import { UserRole, LanguageCode, NotificationItem } from '../types';
 import { translations } from '../data/initialData';
@@ -29,6 +30,7 @@ interface TopNavBarProps {
   onNavigateToTab: (tab: any) => void;
   onOpenLogout?: () => void;
   onOpenJudgeShowcase?: () => void;
+  onOpenMobileDrawer?: () => void;
   userAvatar: string;
 }
 
@@ -46,6 +48,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   onNavigateToTab,
   onOpenLogout,
   onOpenJudgeShowcase,
+  onOpenMobileDrawer,
   userAvatar
 }) => {
   const [showNotifications, setShowNotifications] = React.useState(false);
@@ -58,12 +61,12 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   const t = translations[currentLanguage] || translations.en;
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const roleLabels: Record<UserRole, { label: string; badgeColor: string }> = {
-    student: { label: t.roleStudent || 'Student', badgeColor: 'bg-[#E8E8DF] text-[#42422E] border border-[#D5D5C6]' },
-    recruiter: { label: t.roleRecruiter || 'Industry Recruiter', badgeColor: 'bg-[#EAF1EB] text-[#34583A] border border-[#CFE0D1]' },
-    academician: { label: t.roleAcademician || 'Faculty / Academician', badgeColor: 'bg-[#F7F3E8] text-[#7A6A32] border border-[#E9E0C7]' },
-    institution_admin: { label: t.roleAdmin || 'Institution Admin', badgeColor: 'bg-[#F4ECE4] text-[#8C5E3C] border border-[#E6D4C3]' },
-    alumni: { label: (t as any).roleAlumni || 'Alumni Mentor / Partner', badgeColor: 'bg-[#EBF3ED] text-[#2D5A3C] border border-[#B8D5BC]' }
+  const roleLabels: Record<UserRole, { label: string; shortLabel: string; badgeColor: string }> = {
+    student: { label: t.roleStudent || 'Student', shortLabel: 'Student', badgeColor: 'bg-[#E8E8DF] text-[#42422E] border border-[#D5D5C6]' },
+    recruiter: { label: t.roleRecruiter || 'Industry Recruiter', shortLabel: 'Recruiter', badgeColor: 'bg-[#EAF1EB] text-[#34583A] border border-[#CFE0D1]' },
+    academician: { label: t.roleAcademician || 'Faculty / Academician', shortLabel: 'Faculty', badgeColor: 'bg-[#F7F3E8] text-[#7A6A32] border border-[#E9E0C7]' },
+    institution_admin: { label: t.roleAdmin || 'Institution Admin', shortLabel: 'Admin', badgeColor: 'bg-[#F4ECE4] text-[#8C5E3C] border border-[#E6D4C3]' },
+    alumni: { label: (t as any).roleAlumni || 'Alumni Mentor / Partner', shortLabel: 'Alumni', badgeColor: 'bg-[#EBF3ED] text-[#2D5A3C] border border-[#B8D5BC]' }
   };
 
   // Quick suggestions for global search
@@ -96,28 +99,42 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 md:left-[280px] w-full md:w-[calc(100%-280px)] z-40 flex justify-between items-center px-4 md:px-6 h-16 bg-[#F9F9F7] border-b border-[#E5E2D9] shadow-xs">
-      {/* Brand / Context Indicator on Mobile and Desktop */}
+    <nav className="fixed top-0 left-0 md:left-[240px] lg:left-[280px] w-full md:w-[calc(100%-240px)] lg:w-[calc(100%-280px)] z-40 flex justify-between items-center px-3 sm:px-4 md:px-6 h-16 bg-[#F9F9F7] border-b border-[#E5E2D9] shadow-xs">
+      {/* Left Area: Mobile Hamburger Button & Brand Context */}
       <div className="flex items-center gap-2 shrink-0">
+        {/* Mobile Hamburger Drawer Trigger */}
+        {onOpenMobileDrawer && (
+          <button
+            id="mobile-drawer-hamburger-btn"
+            onClick={onOpenMobileDrawer}
+            aria-label="Open full portal navigation"
+            className="md:hidden p-2 -ml-1 text-[#5F5E59] hover:text-[#2D2D2A] hover:bg-[#EBE8E1] rounded-lg transition-colors cursor-pointer"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+
         {/* Mobile Brand Logo */}
-        <div className="md:hidden flex items-center gap-2 cursor-pointer" onClick={() => onNavigateToTab('profile')}>
-          <div className="w-8 h-8 rounded-lg bg-[#5A5A40] flex items-center justify-center text-[#F9F9F7] font-bold text-sm">
+        <div className="md:hidden flex items-center gap-1.5 cursor-pointer" onClick={() => onNavigateToTab('profile')}>
+          <div className="w-7 h-7 rounded-lg bg-[#5A5A40] flex items-center justify-center text-[#F9F9F7] font-bold text-xs shadow-xs">
             SN
           </div>
-          <span className="font-bold text-base text-[#2D2D2A] tracking-tight font-serif-display">SkillBridge</span>
+          <span className="font-bold text-sm sm:text-base text-[#2D2D2A] tracking-tight font-serif-display hidden xs:inline">
+            SkillBridge
+          </span>
         </div>
 
         {/* Desktop Portal Context Chip */}
-        <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#EBE8E1]/70 border border-[#E5E2D9] text-[11px] font-medium text-[#5F5E59]">
+        <div className="hidden xl:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#EBE8E1]/70 border border-[#E5E2D9] text-[11px] font-medium text-[#5F5E59]">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span className="truncate max-w-[140px] xl:max-w-[200px]">Live Skill Passport Ledger</span>
         </div>
       </div>
 
-      {/* Global Search Bar - Properly centered with ample room */}
-      <div ref={searchContainerRef} className="flex flex-1 justify-center max-w-lg lg:max-w-xl mx-2 md:mx-4 relative">
+      {/* Global Search Bar - Responsive width */}
+      <div ref={searchContainerRef} className="flex flex-1 justify-center max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-2 sm:mx-3 md:mx-4 relative min-w-0">
         <div className="relative w-full">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C7B76] pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#7C7B76] pointer-events-none" />
           <input
             id="global-search-input"
             type="text"
@@ -128,7 +145,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               setIsSearchFocused(true);
             }}
             placeholder={t.searchPlaceholder || "Search skills, assessments, jobs, credentials..."}
-            className="w-full pl-9 pr-8 py-2 bg-[#EBE8E1]/80 hover:bg-[#EBE8E1] focus:bg-[#FFFFFF] border border-[#E5E2D9] focus:border-[#5A5A40] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A5A40]/20 text-xs sm:text-sm text-[#2D2D2A] placeholder-[#7C7B76] transition-all shadow-2xs"
+            className="w-full pl-8 sm:pl-9 pr-7 sm:pr-8 py-1.5 sm:py-2 bg-[#EBE8E1]/80 hover:bg-[#EBE8E1] focus:bg-[#FFFFFF] border border-[#E5E2D9] focus:border-[#5A5A40] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#5A5A40]/20 text-xs sm:text-sm text-[#2D2D2A] placeholder-[#7C7B76] transition-all shadow-2xs truncate"
           />
           {searchQuery && (
             <button 
@@ -136,7 +153,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                 onSearchChange('');
                 setIsSearchFocused(false);
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7C7B76] hover:text-[#2D2D2A] p-0.5 rounded-full hover:bg-[#E5E2D9] transition-colors"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7C7B76] hover:text-[#2D2D2A] p-0.5 rounded-full hover:bg-[#E5E2D9] transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -145,7 +162,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
 
         {/* Interactive Search Autocomplete / Quick Navigation Dropdown */}
         {isSearchFocused && searchQuery.trim().length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-1 overflow-hidden">
+          <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-1 overflow-hidden min-w-[280px] max-w-full">
             <div className="px-3 py-1.5 text-[10px] font-bold text-[#7C7B76] uppercase tracking-wider border-b border-[#E5E2D9] flex justify-between items-center">
               <span>Quick Navigation &amp; Results</span>
               <span>{matchingSuggestions.length} found</span>
@@ -162,14 +179,14 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
                     }}
                     className="w-full text-left px-3.5 py-2.5 hover:bg-[#EBE8E1] transition-colors flex items-center justify-between group cursor-pointer"
                   >
-                    <div>
-                      <p className="text-xs font-semibold text-[#2D2D2A] group-hover:text-[#5A5A40] transition-colors">
+                    <div className="min-w-0 flex-1 pr-2">
+                      <p className="text-xs font-semibold text-[#2D2D2A] group-hover:text-[#5A5A40] transition-colors truncate">
                         {item.title}
                       </p>
-                      <p className="text-[10px] text-[#7C7B76]">{item.category}</p>
+                      <p className="text-[10px] text-[#7C7B76] truncate">{item.category}</p>
                     </div>
-                    <span className="text-[10px] font-bold text-[#5A5A40] bg-[#E8E8DF] px-2 py-0.5 rounded border border-[#D5D5C6]">
-                      Jump to view &rarr;
+                    <span className="text-[10px] font-bold text-[#5A5A40] bg-[#E8E8DF] px-2 py-0.5 rounded border border-[#D5D5C6] shrink-0">
+                      Jump &rarr;
                     </span>
                   </button>
                 ))}
@@ -184,17 +201,17 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
       </div>
 
       {/* Action Controls & User Meta */}
-      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+      <div className="flex items-center gap-1 sm:gap-2 shrink-0">
         {/* Judge Showcase 3D Button */}
         {onOpenJudgeShowcase && (
           <button
             id="judge-showcase-topbar-btn"
             onClick={onOpenJudgeShowcase}
             title="Open 3D Judge Showcase Deck & Holographic Passport"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-[#2D2D24] via-[#48483B] to-[#2D2D24] text-[#FFE899] border border-[#FFE899]/40 hover:border-[#FFE899] transition-all cursor-pointer shadow-sm hover:shadow-md animate-pulse"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-[#2D2D24] via-[#48483B] to-[#2D2D24] text-[#FFE899] border border-[#FFE899]/40 hover:border-[#FFE899] transition-all cursor-pointer shadow-xs hover:shadow-md"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#FFE899]" />
-            <span className="hidden sm:inline">3D Judge Deck</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#FFE899] shrink-0" />
+            <span className="hidden sm:inline">3D Deck</span>
           </button>
         )}
 
@@ -203,30 +220,32 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
           id="toggle-offline-btn"
           onClick={onToggleOffline}
           title={isOffline ? "Offline Mode (Click to connect)" : "Online Mode (Click to simulate offline)"}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+          className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
             isOffline 
               ? 'bg-[#E8E8DF] text-[#42422E] border-[#D5D5C6]' 
-              : 'bg-[#EAF1EB] text-[#34583A] border-[#CFE0D1] hidden sm:flex'
+              : 'bg-[#EAF1EB] text-[#34583A] border-[#CFE0D1]'
           }`}
         >
           {isOffline ? <WifiOff className="w-3.5 h-3.5 text-[#5A5A40]" /> : <Wifi className="w-3.5 h-3.5 text-[#34583A]" />}
-          <span className="hidden lg:inline">{isOffline ? t.offlineStatus : t.onlineStatus}</span>
+          <span className="hidden xl:inline">{isOffline ? t.offlineStatus : t.onlineStatus}</span>
         </button>
 
-        {/* Role Switcher Pill */}
+        {/* Role Switcher Pill - Accessible on Mobile & Desktop */}
         <div className="relative">
           <button
             id="role-selector-btn"
-            onClick={() => { setShowRoleMenu(!showRoleMenu); setShowLangMenu(false); setShowNotifications(false); }}
-            className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold ${roleLabels[currentRole].badgeColor} hover:opacity-90 transition-all cursor-pointer`}
+            onClick={() => { setShowRoleMenu(!showRoleMenu); setShowLangMenu(false); setShowNotifications(false); setShowUserMenu(false); }}
+            title={`Active Role: ${roleLabels[currentRole].label}. Click to switch.`}
+            className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-semibold ${roleLabels[currentRole].badgeColor} hover:opacity-90 transition-all cursor-pointer`}
           >
-            <Sparkles className="w-3 h-3" />
-            <span>{roleLabels[currentRole].label}</span>
+            <Sparkles className="w-3 h-3 text-[#5A5A40] shrink-0" />
+            <span className="hidden md:inline">{roleLabels[currentRole].label}</span>
+            <span className="md:hidden">{roleLabels[currentRole].shortLabel}</span>
           </button>
 
           {showRoleMenu && (
-            <div className="absolute right-0 mt-2 w-56 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2">
-              <div className="px-3 py-1.5 text-xs font-semibold text-[#7C7B76] uppercase tracking-wider">
+            <div className="absolute right-0 mt-2 w-56 sm:w-60 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2">
+              <div className="px-3 py-1.5 text-xs font-semibold text-[#7C7B76] uppercase tracking-wider border-b border-[#E5E2D9]">
                 {t.switchRole}
               </div>
               {(['student', 'recruiter', 'academician', 'institution_admin', 'alumni'] as UserRole[]).map((role) => (
@@ -252,8 +271,8 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
         <div className="relative">
           <button
             id="language-dropdown-btn"
-            onClick={() => { setShowLangMenu(!showLangMenu); setShowRoleMenu(false); setShowNotifications(false); }}
-            className="p-2 text-[#5F5E59] hover:bg-[#EBE8E1] transition-colors rounded-full flex items-center justify-center cursor-pointer"
+            onClick={() => { setShowLangMenu(!showLangMenu); setShowRoleMenu(false); setShowNotifications(false); setShowUserMenu(false); }}
+            className="p-1.5 sm:p-2 text-[#5F5E59] hover:bg-[#EBE8E1] transition-colors rounded-full flex items-center justify-center cursor-pointer"
             title="Change Language"
           >
             <Globe className="w-4 h-4" />
@@ -291,19 +310,19 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
         <div className="relative">
           <button
             id="notifications-btn"
-            onClick={() => { setShowNotifications(!showNotifications); setShowLangMenu(false); setShowRoleMenu(false); }}
-            className="relative p-2 text-[#5F5E59] hover:bg-[#EBE8E1] transition-colors rounded-full flex items-center justify-center cursor-pointer"
+            onClick={() => { setShowNotifications(!showNotifications); setShowLangMenu(false); setShowRoleMenu(false); setShowUserMenu(false); }}
+            className="relative p-1.5 sm:p-2 text-[#5F5E59] hover:bg-[#EBE8E1] transition-colors rounded-full flex items-center justify-center cursor-pointer"
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 w-4 h-4 bg-[#8C5E3C] text-white rounded-full text-[10px] font-bold flex items-center justify-center animate-pulse">
+              <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 w-4 h-4 bg-[#8C5E3C] text-white rounded-full text-[10px] font-bold flex items-center justify-center">
                 {unreadCount}
               </span>
             )}
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2">
+            <div className="absolute right-0 mt-2 w-72 sm:w-96 bg-[#F9F9F7] rounded-xl shadow-xl border border-[#E5E2D9] py-2 z-50 animate-in fade-in slide-in-from-top-2 max-w-[calc(100vw-24px)]">
               <div className="flex items-center justify-between px-4 py-2 border-b border-[#E5E2D9]">
                 <span className="font-bold text-sm text-[#2D2D2A]">Notifications</span>
                 <span className="text-xs bg-[#E8E8DF] text-[#42422E] px-2 py-0.5 rounded-full font-medium border border-[#D5D5C6]">
@@ -356,7 +375,7 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
               src={userAvatar}
               alt="User profile"
               referrerPolicy="no-referrer"
-              className="w-8 h-8 rounded-full object-cover border border-[#E5E2D9] ring-1 ring-[#D5D5C6]"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-[#E5E2D9] ring-1 ring-[#D5D5C6]"
             />
           </div>
 
@@ -412,3 +431,4 @@ export const TopNavBar: React.FC<TopNavBarProps> = ({
     </nav>
   );
 };
+

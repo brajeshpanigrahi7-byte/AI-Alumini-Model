@@ -52,7 +52,36 @@ export const HolographicPassport3D: React.FC<HolographicPassport3DProps> = ({
     });
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isAutoRotate || !cardRef.current || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotX = Math.max(-20, Math.min(20, ((y - centerY) / centerY) * -16));
+    const rotY = Math.max(-20, Math.min(20, ((x - centerX) / centerX) * 16));
+
+    setRotateX(rotX);
+    setRotateY(rotY);
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.4
+    });
+  };
+
   const handleMouseLeave = () => {
+    if (!isAutoRotate) {
+      setRotateX(0);
+      setRotateY(0);
+      setGlare(prev => ({ ...prev, opacity: 0 }));
+    }
+  };
+
+  const handleTouchEnd = () => {
     if (!isAutoRotate) {
       setRotateX(0);
       setRotateY(0);
@@ -131,6 +160,8 @@ export const HolographicPassport3D: React.FC<HolographicPassport3DProps> = ({
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onClick={() => setIsFlipped(!isFlipped)}
       >
         <div 

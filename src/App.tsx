@@ -37,6 +37,7 @@ import { DocumentVaultView } from './components/DocumentVaultView';
 import { CollaborationHubView } from './components/CollaborationHubView';
 import { HelpCenterView } from './components/HelpCenterView';
 import { MobileBottomNav } from './components/MobileBottomNav';
+import { MobileDrawer } from './components/MobileDrawer';
 import { PostOpportunityModal } from './components/Modals/PostOpportunityModal';
 import { PublicPortfolioModal } from './components/Modals/PublicPortfolioModal';
 import { ResumeModal } from './components/Modals/ResumeModal';
@@ -114,6 +115,7 @@ export default function App() {
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const [isJudgeShowcaseOpen, setIsJudgeShowcaseOpen] = useState(false);
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   // Sync to local storage
   useEffect(() => {
@@ -405,6 +407,7 @@ export default function App() {
         onNavigateToTab={setActiveTab}
         onOpenLogout={() => setIsLogoutOpen(true)}
         onOpenJudgeShowcase={() => setIsJudgeShowcaseOpen(true)}
+        onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
         userAvatar={userProfile.avatar}
       />
 
@@ -420,16 +423,16 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-[280px] mt-16 pt-6 pb-24 md:pb-12 px-4 md:px-8 max-w-[1440px] mx-auto w-full transition-all">
+      <main className="flex-1 md:ml-[240px] lg:ml-[280px] mt-16 pt-4 sm:pt-6 pb-24 md:pb-12 px-3 sm:px-4 md:px-6 lg:px-8 max-w-[1440px] mx-auto w-full transition-all">
         {/* Offline Banner if Active */}
         {isOffline && (
-          <div className="mb-6 p-3 bg-[#E8E8DF] text-[#42422E] border border-[#D5D5C6] rounded-xl text-xs flex items-center justify-between shadow-xs">
+          <div className="mb-4 sm:mb-6 p-3 bg-[#E8E8DF] text-[#42422E] border border-[#D5D5C6] rounded-xl text-xs flex items-center justify-between shadow-xs">
             <span>
               <strong>Offline Mode Active:</strong> All changes are safely cached in IndexedDB/LocalState. Changes will auto-sync once connectivity is restored.
             </span>
             <button
               onClick={() => setIsOffline(false)}
-              className="px-2.5 py-1 bg-[#5A5A40] text-[#F9F9F7] rounded-lg font-bold hover:bg-[#4A4A33] transition-colors"
+              className="px-2.5 py-1 bg-[#5A5A40] text-[#F9F9F7] rounded-lg font-bold hover:bg-[#4A4A33] transition-colors shrink-0 ml-2"
             >
               Re-connect
             </button>
@@ -531,6 +534,25 @@ export default function App() {
       <MobileBottomNav
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        onOpenMenu={() => setIsMobileDrawerOpen(true)}
+      />
+
+      {/* Mobile Full Slideout Navigation Drawer */}
+      <MobileDrawer
+        isOpen={isMobileDrawerOpen}
+        onClose={() => setIsMobileDrawerOpen(false)}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        currentRole={currentRole}
+        onRoleChange={handleRoleChange}
+        currentLanguage={currentLanguage}
+        onLanguageChange={setCurrentLanguage}
+        isOffline={isOffline}
+        onToggleOffline={() => setIsOffline(!isOffline)}
+        onOpenLogout={() => setIsLogoutOpen(true)}
+        onOpenJudgeShowcase={() => setIsJudgeShowcaseOpen(true)}
+        onOpenPostOpportunity={() => setIsPostOpportunityOpen(true)}
+        userProfile={userProfile}
       />
 
       {/* Interactive Modals */}
